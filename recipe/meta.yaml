@@ -15,16 +15,16 @@ source:
     - lalinference-python3.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
   build:
+    - {{ compiler('c') }}
     - pkg-config
     - make
-    - {{ compiler('c') }}
-  host:
     - swig >=3.0.7
+  host:
     - gsl
     - metaio
     - chealpix >=3.30.0
@@ -38,11 +38,15 @@ requirements:
 outputs:
   - name: lalinference
     script: install-c.sh
+    build:
+      activate_in_script: True
     requirements:
-      host:
+      build:
         - {{ compiler('c') }}
+        - pkg-config
         - make
         - swig >=3.0.7
+      host:
         - gsl
         - metaio
         - chealpix >=3.30.0
@@ -66,7 +70,9 @@ outputs:
       commands:
         - lalinference_version --verbose
     about:
-      home: https://wiki.ligo.org/DASWG/LALSuite
+      home: https://wiki.ligo.org/Computing/DASWG/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPLv3
       license_family: GPL
       license_file: COPYING
@@ -78,12 +84,15 @@ outputs:
 
   - name: python-lalinference
     script: install-python.sh
+    build:
+      activate_in_script: True
     requirements:
-      host:
+      build:
         - {{ compiler('c') }}
         - make
         - pkg-config
         - swig >=3.0.7
+      host:
         - {{ pin_subpackage('lalinference', exact=True) }}
         - python
         - numpy
@@ -105,53 +114,14 @@ outputs:
         - h5py
         - shapely
         - pytest
-
     test:
       imports:
         - lalinference
-        - lalinference.bayespputils
-        - lalinference.bayestar
-        - lalinference.bayestar.command
-        - lalinference.bayestar.decorator
-        - lalinference.bayestar.deprecation
-        - lalinference.bayestar.distance
-        - lalinference.bayestar.filter
-        - lalinference.bayestar.ligolw
-        - lalinference.bayestar.moc
-        - lalinference.bayestar.postprocess
-        - lalinference.bayestar.sky_map
-        - lalinference.bayestar.timing
-        - lalinference.distance
-        - lalinference.eigenframe
-        - lalinference.healpix_tree
         - lalinference.imrtgr
         - lalinference.imrtgr.imrtgrutils
         - lalinference.imrtgr.nrutils
         - lalinference.imrtgr.pneqns
-        - lalinference.io
-        - lalinference.io.events
-        - lalinference.io.events.base
-        - lalinference.io.events.detector_disabled
-        - lalinference.io.events.gracedb
-        - lalinference.io.events.hdf
-        - lalinference.io.events.ligolw
-        - lalinference.io.events.magic
-        - lalinference.io.events.sqlite
-        - lalinference.io.fits
-        - lalinference.io.hdf5
-        - lalinference.kde
-        - lalinference.moc
         - lalinference.nest2pos
-        - lalinference.plot
-        - lalinference.plot.allsky
-        - lalinference.plot.angle
-        - lalinference.plot.backend_pdf_vcs_friendly
-        - lalinference.plot.cmap
-        - lalinference.plot.healpix
-        - lalinference.plot.marker
-        - lalinference.plot.poly
-        - lalinference.plot.pp
-        - lalinference.plot.spindisk
         - lalinference.rapid_pe
         - lalinference.rapid_pe.common_cl
         - lalinference.rapid_pe.dagutils
@@ -163,11 +133,10 @@ outputs:
         - lalinference.tiger.make_injtimes
         - lalinference.tiger.omegascans_dag
         - lalinference.tiger.postproc
-        - lalinference.util
-        - lalinference.util.file
-        - lalinference.util.sqlite
     about:
-      home: https://wiki.ligo.org/DASWG/LALSuite
+      home: https://wiki.ligo.org/Computing/DASWG/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPLv3
       license_family: GPL
       license_file: COPYING
@@ -177,7 +146,7 @@ outputs:
         analysis.  This package contains the python bindings.
 
 about:
-  home: https://wiki.ligo.org/DASWG/LALSuite
+  home: https://wiki.ligo.org/Computing/DASWG/LALSuite
   license: GPLv3
   license_family: GPL
   summary: LSC Algorithm Inference Library
