@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
-{% set version = "1.10.0" %}
-{% set sha256 = "e44af2856d9570aeb795be3a663a7dd7bc6e65fa07f46846da4b0fd2c0537fa5" %}
+{% set version = "1.10.1" %}
+{% set sha256 = "a915c47deb17978266a22983bb512b903de1aa9f0262c6fccb781539da471330" %}
 
 package:
   name: {{ name }}
@@ -15,7 +15,7 @@ source:
     - lalinference-python3.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
 
 requirements:
