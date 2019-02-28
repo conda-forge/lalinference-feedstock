@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
-{% set version = "1.10.1" %}
-{% set sha256 = "a915c47deb17978266a22983bb512b903de1aa9f0262c6fccb781539da471330" %}
+{% set version = "1.10.2" %}
+{% set sha256 = "bc16224ba96f278f0e7c4a2b88d5e8afc6a54cd2eac87c0384ad45dde7dfbee1" %}
 
 package:
   name: {{ name }}
