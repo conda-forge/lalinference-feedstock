@@ -23,7 +23,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -59,9 +59,9 @@ test:
 
 outputs:
   - name: lalinference
-    script: install-c.sh
     build:
-      activate_in_script: True
+      run_exports:
+        - {{ pin_subpackage("lalinference", max_pin="x.x") }}
 
   - name: python-lalinference
     script: install-python.sh
