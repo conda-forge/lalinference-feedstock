@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
-{% set version = "1.10.2" %}
-{% set sha256 = "bc16224ba96f278f0e7c4a2b88d5e8afc6a54cd2eac87c0384ad45dde7dfbee1" %}
+{% set version = "1.11.0" %}
+{% set sha256 = "1876a4be72099084295e0753f779413a4df1223a17981950042796717a888620" %}
 
 # dependencies
 {% set chealpix_version = "3.30.0" %}
@@ -23,7 +23,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
 
 requirements:
