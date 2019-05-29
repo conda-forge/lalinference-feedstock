@@ -1,10 +1,10 @@
 {% set name = "lalinference" %}
-{% set version = "1.10.2" %}
-{% set sha256 = "bc16224ba96f278f0e7c4a2b88d5e8afc6a54cd2eac87c0384ad45dde7dfbee1" %}
+{% set version = "1.10.3" %}
+{% set sha256 = "a1dd08c959793eba45e1190b81941fbaed56513dd47d8cd3c03c7156f84a30e6" %}
 
 # dependencies
 {% set chealpix_version = "3.30.0" %}
-{% set lal_version = "6.19.2" %}
+{% set lal_version = "6.19.2,<6.20.0a0" %}
 {% set lalburst_version = "1.5.1" %}
 {% set lalframe_version = "1.4.0" %}
 {% set lalinspiral_version = "1.8.1" %}
@@ -23,7 +23,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
 
 requirements:
@@ -35,23 +35,31 @@ requirements:
   host:
     - chealpix >={{ chealpix_version }}
     - gsl
+    - hdf5
     - lal >={{ lal_version }}
+    - lalframe >={{ lalframe_version }}
     - lalmetaio >={{ lalmetaio_version }}
     - lalsimulation >={{ lalsimulation_version }}
     - lalburst >={{ lalburst_version }}
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
+    - libcblas=*=*netlib
     - metaio
   run:
     - chealpix >={{ chealpix_version }}
     - gsl
+    - hdf5
     - lal >={{ lal_version }}
+    - lalframe >={{ lalframe_version }}
     - lalmetaio >={{ lalmetaio_version }}
     - lalsimulation >={{ lalsimulation_version }}
     - lalburst >={{ lalburst_version }}
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
+    - libcblas
     - metaio
+    # ax_lib_hdf5 links '-lz', so we depend upon it
+    - zlib
 
 test:
   commands:
@@ -75,15 +83,28 @@ outputs:
         - swig >={{ swig_version }}
       host:
         - {{ pin_subpackage('lalinference', exact=True) }}
+        - libcblas=*=*netlib
         - python
         - numpy
       run:
         - astropy >=1.1.1
+        - chealpix >={{ chealpix_version }}
+        - gsl
+        - hdf5
         - healpy >=1.9.1
         - h5py
+        - lal >={{ lal_version }}
+        - lalframe >={{ lalframe_version }}
+        - lalmetaio >={{ lalmetaio_version }}
+        - lalsimulation >={{ lalsimulation_version }}
+        - lalburst >={{ lalburst_version }}
+        - lalinspiral >={{ lalinspiral_version }}
+        - lalpulsar >={{ lalpulsar_version }}
         - {{ pin_subpackage('lalinference', exact=True) }}
+        - libcblas
         - lscsoft-glue >=1.54.1
         - matplotlib >=1.2.0
+        - metaio
         - {{ pin_compatible('numpy') }}
         - python
         - python-lal >={{ lal_version }}
@@ -94,6 +115,8 @@ outputs:
         - python-lalpulsar >={{ lalpulsar_version }}
         - scipy >=0.8
         - shapely
+        # ax_lib_hdf5 links '-lz', so we depend upon it
+        - zlib
     test:
       imports:
         - lalinference
