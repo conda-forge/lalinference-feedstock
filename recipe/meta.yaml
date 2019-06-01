@@ -4,7 +4,7 @@
 
 # dependencies
 {% set chealpix_version = "3.30.0" %}
-{% set lal_version = "6.19.2,<6.20.0a0" %}
+{% set lal_version = "6.19.2" %}
 {% set lalburst_version = "1.5.1" %}
 {% set lalframe_version = "1.4.0" %}
 {% set lalinspiral_version = "1.8.1" %}
@@ -85,7 +85,7 @@ outputs:
         - {{ pin_subpackage('lalinference', exact=True) }}
         - libcblas=*=*netlib
         - python
-        - numpy
+        - numpy 1.9
       run:
         - astropy >=1.1.1
         - chealpix >={{ chealpix_version }}
