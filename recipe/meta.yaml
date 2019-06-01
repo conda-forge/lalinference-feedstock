@@ -44,7 +44,9 @@ requirements:
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
     - libcblas=*=*netlib
+    - llvm-openmp  # [osx]
     - metaio
+    - openmp  # [linux]
   run:
     - chealpix >={{ chealpix_version }}
     - gsl
@@ -57,9 +59,9 @@ requirements:
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
     - libcblas
+    - llvm-openmp  # [osx]
     - metaio
-    # ax_lib_hdf5 links '-lz', so we depend upon it
-    - zlib
+    - openmp  # [linux]
 
 test:
   commands:
@@ -115,8 +117,6 @@ outputs:
         - python-lalpulsar >={{ lalpulsar_version }}
         - scipy >=0.8
         - shapely
-        # ax_lib_hdf5 links '-lz', so we depend upon it
-        - zlib
     test:
       imports:
         - lalinference
