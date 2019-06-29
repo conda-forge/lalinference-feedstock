@@ -36,7 +36,7 @@ requirements:
     - chealpix >={{ chealpix_version }}
     - gsl
     - hdf5
-    - lal >={{ lal_version }}
+    - lal >={{ lal_version }} fftw*
     - lalframe >={{ lalframe_version }}
     - lalmetaio >={{ lalmetaio_version }}
     - lalsimulation >={{ lalsimulation_version }}
