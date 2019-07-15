@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
-{% set version = "1.11.1" %}
-{% set sha256 = "65bac07f381dfd4be6dc66028258ad25664fa423ddbde1de1d482a7bb98ea5e9" %}
+{% set version = "1.11.2" %}
+{% set sha256 = "84fd4d5b49f1f16d7cb55746ae63e07d3c8aa7a6ea544107cd441edeb03ab4fd" %}
 
 # dependencies
 {% set chealpix_version = "3.30.0" %}
@@ -23,7 +23,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
 
 requirements:
@@ -35,7 +35,7 @@ requirements:
   host:
     - chealpix >={{ chealpix_version }}
     - gsl
-    - hdf5
+    - hdf5 1.10.4
     - lal >={{ lal_version }} fftw*
     - lalframe >={{ lalframe_version }}
     - lalmetaio >={{ lalmetaio_version }}
