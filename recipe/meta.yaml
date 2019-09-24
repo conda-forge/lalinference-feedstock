@@ -23,12 +23,13 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - help2man
     - make
     - pkg-config
     - swig >={{ swig_version }}
@@ -43,7 +44,7 @@ requirements:
     - lalburst >={{ lalburst_version }}
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
-    - libcblas=*=*netlib
+    - libcblas
     - llvm-openmp  # [osx]
     - metaio
     - openmp  # [linux]
@@ -85,7 +86,7 @@ outputs:
         - swig >={{ swig_version }}
       host:
         - {{ pin_subpackage('lalinference', exact=True) }}
-        - libcblas=*=*netlib
+        - libcblas
         - python
         - numpy 1.9
       run:
