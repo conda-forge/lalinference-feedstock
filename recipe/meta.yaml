@@ -23,7 +23,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
@@ -66,6 +66,7 @@ requirements:
 
 test:
   commands:
+    - test ${LALINFERENCE_DATADIR} == "${PREFIX}/share/lalinference"  # [unix]
     - lalinference_bench --psdlength 1000 --psdstart 1 --seglen 8 --srate 4096 --trigtime 0 --ifo H1 --H1-channel LALSimAdLIGO --H1-cache LALSimAdLIGO --dataseed 1324 --Niter 10 --fix-chirpmass 1.21
     #- lalinference_burst --help
     - lalinference_datadump --help
