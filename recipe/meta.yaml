@@ -65,10 +65,11 @@ requirements:
     - llvm-openmp  # [osx]
     - metaio
     - openmp  # [linux]
+    - zlib  # [linux]
 
 test:
   commands:
-    - test ${LALINFERENCE_DATADIR} == "${PREFIX}/share/lalinference"  # [unix]
+    - test -f "${LALINFERENCE_DATADIR}/lalinference_pipe_example.ini"  # [unix]
     - lalinference_bench --psdlength 1000 --psdstart 1 --seglen 8 --srate 4096 --trigtime 0 --ifo H1 --H1-channel LALSimAdLIGO --H1-cache LALSimAdLIGO --dataseed 1324 --Niter 10 --fix-chirpmass 1.21
     #- lalinference_burst --help
     - lalinference_datadump --help
@@ -93,29 +94,30 @@ outputs:
         - pkg-config
         - swig >={{ swig_version }}
       host:
+        - gsl
         - {{ pin_subpackage('lalinference', exact=True) }}
         - libcblas
-        - python
         - numpy 1.9
+        - python
       run:
         - astropy >=1.1.1
         - chealpix >={{ chealpix_version }}
         - gsl
-        - hdf5
+        - hdf5  # [linux]
         - healpy >=1.9.1
         - h5py
         - lal >={{ lal_version }}
-        - lalframe >={{ lalframe_version }}
+        - lalframe >={{ lalframe_version }}  # [linux]
         - lalmetaio >={{ lalmetaio_version }}
-        - lalsimulation >={{ lalsimulation_version }}
-        - lalburst >={{ lalburst_version }}
-        - lalinspiral >={{ lalinspiral_version }}
-        - lalpulsar >={{ lalpulsar_version }}
+        - lalsimulation >={{ lalsimulation_version }}  # [linux]
+        - lalburst >={{ lalburst_version }}  # [linux]
+        - lalinspiral >={{ lalinspiral_version }}  # [linux]
+        - lalpulsar >={{ lalpulsar_version }}  # [linux]
         - {{ pin_subpackage('lalinference', exact=True) }}
         - libcblas
         - lscsoft-glue >=1.54.1
         - matplotlib >=1.2.0
-        - metaio
+        - metaio  # [linux]
         - {{ pin_compatible('numpy') }}
         - python
         - python-lal >={{ lal_version }}
@@ -126,6 +128,7 @@ outputs:
         - python-lalpulsar >={{ lalpulsar_version }}
         - scipy >=0.8
         - shapely
+        - zlib  # [linux]
     test:
       imports:
         - lalinference
