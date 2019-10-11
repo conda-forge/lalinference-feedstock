@@ -94,9 +94,7 @@ outputs:
         - pkg-config
         - swig >={{ swig_version }}
       host:
-        - gsl
         - {{ pin_subpackage('lalinference', exact=True) }}
-        - libcblas
         - numpy 1.9
         - python
       run:
