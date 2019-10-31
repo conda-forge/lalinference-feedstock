@@ -93,7 +93,10 @@ outputs:
         - make
         - pkg-config
       host:
+        - chealpix >={{ chealpix_version }}
+        - gsl
         - {{ pin_subpackage('lalinference', exact=True) }}
+        - libcblas
         - numpy 1.9
         - python
         - swig >={{ swig_version }}
