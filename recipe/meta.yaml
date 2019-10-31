@@ -34,7 +34,6 @@ requirements:
     - help2man
     - make
     - pkg-config
-    - swig >={{ swig_version }}
   host:
     - chealpix >={{ chealpix_version }}
     - gsl
@@ -50,6 +49,7 @@ requirements:
     - llvm-openmp  # [osx]
     - metaio
     - openmp  # [linux]
+    - swig >={{ swig_version }}
   run:
     - chealpix >={{ chealpix_version }}
     - gsl
@@ -92,11 +92,11 @@ outputs:
         - {{ compiler('c') }}
         - make
         - pkg-config
-        - swig >={{ swig_version }}
       host:
         - {{ pin_subpackage('lalinference', exact=True) }}
         - numpy 1.9
         - python
+        - swig >={{ swig_version }}
       run:
         - astropy >=1.1.1
         - chealpix >={{ chealpix_version }}
