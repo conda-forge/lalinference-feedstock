@@ -68,6 +68,8 @@ requirements:
     - zlib  # [linux]
 
 test:
+  requires:
+    - pkg-config  # [unix]
   commands:
     - test -f "${LALINFERENCE_DATADIR}/lalinference_pipe_example.ini"  # [unix]
     - lalinference_bench --psdlength 1000 --psdstart 1 --seglen 8 --srate 4096 --trigtime 0 --ifo H1 --H1-channel LALSimAdLIGO --H1-cache LALSimAdLIGO --dataseed 1324 --Niter 10 --fix-chirpmass 1.21
@@ -76,6 +78,7 @@ test:
     - lalinference_injectedlike --help
     - lalinference_nest --help
     - lalinference_version --verbose
+    - pkg-config --print-errors --modversion lalinference  # [unix]
 
 outputs:
   - name: lalinference
