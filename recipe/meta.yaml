@@ -26,6 +26,8 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
+  ignore_run_exports:
+    - hdf5  # [osx]
   number: 1
   skip: true  # [win]
 
