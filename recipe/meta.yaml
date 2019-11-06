@@ -20,6 +20,8 @@ package:
 source:
   url: "http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz"
   sha256: "{{ sha256 }}"
+  patches:
+    - no-metaio.patch
 
 build:
   error_overdepending: true
@@ -47,7 +49,6 @@ requirements:
     - lalpulsar >={{ lalpulsar_version }}
     - libcblas
     - llvm-openmp  # [osx]
-    - metaio
     - openmp  # [linux]
   run:
     - chealpix >={{ chealpix_version }}
@@ -62,7 +63,6 @@ requirements:
     - lalpulsar >={{ lalpulsar_version }}
     - libcblas
     - llvm-openmp  # [osx]
-    - metaio
     - openmp  # [linux]
     - zlib  # [linux]
 
@@ -121,7 +121,6 @@ outputs:
         - libcblas
         - lscsoft-glue >=1.54.1
         - matplotlib >=1.2.0
-        - metaio  # [linux]
         - {{ pin_compatible('numpy') }}
         - python
         - python-lal >={{ lal_version }}
