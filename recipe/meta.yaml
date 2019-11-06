@@ -114,7 +114,7 @@ outputs:
         - h5py
         - lal >={{ lal_version }}
         - lalframe >={{ lalframe_version }}  # [linux]
-        - lalmetaio >={{ lalmetaio_version }}
+        - lalmetaio >={{ lalmetaio_version }}  # [linux]
         - lalsimulation >={{ lalsimulation_version }}  # [linux]
         - lalburst >={{ lalburst_version }}  # [linux]
         - lalinspiral >={{ lalinspiral_version }}  # [linux]
