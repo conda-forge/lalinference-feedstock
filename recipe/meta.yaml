@@ -92,6 +92,8 @@ outputs:
     build:
       error_overdepending: true
       error_overlinking: true
+      ignore_run_exports:
+        - libcblas  # [not linux]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -120,7 +122,7 @@ outputs:
         - lalinspiral >={{ lalinspiral_version }}  # [linux]
         - lalpulsar >={{ lalpulsar_version }}  # [linux]
         - {{ pin_subpackage('lalinference', exact=True) }}
-        - libcblas
+        - libcblas  # [linux]
         - lscsoft-glue >=1.54.1
         - matplotlib >=1.2.0
         - {{ pin_compatible('numpy') }}
@@ -137,10 +139,12 @@ outputs:
     test:
       imports:
         - lalinference
+        - lalinference.distance
         - lalinference.imrtgr
         - lalinference.imrtgr.imrtgrutils
         - lalinference.imrtgr.nrutils
         - lalinference.imrtgr.pneqns
+        - lalinference.moc
         - lalinference.nest2pos
         - lalinference.rapid_pe
         - lalinference.rapid_pe.common_cl
