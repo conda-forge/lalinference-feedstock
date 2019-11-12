@@ -46,6 +46,7 @@ jobs:
       export CI=azure
       source run_conda_forge_build_setup
       conda update --yes --quiet --override-channels -c conda-forge -c defaults --all
+      conda install --yes --quiet -c conda-forge "conda<4.7.11a0"  # HACK
     env: {
       OSX_FORCE_SDK_DOWNLOAD: "1"
     }
@@ -68,8 +69,9 @@ jobs:
 
   - script: |
       source activate base
+      export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
       upload_package ./ ./recipe ./.ci_support/${CONFIG}.yaml
-    displayName: Upload recipe
+    displayName: Upload package
     env:
       BINSTAR_TOKEN: $(BINSTAR_TOKEN)
     condition: not(eq(variables['UPLOAD_PACKAGES'], 'False'))
