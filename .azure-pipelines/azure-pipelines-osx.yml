@@ -46,7 +46,6 @@ jobs:
       export CI=azure
       source run_conda_forge_build_setup
       conda update --yes --quiet --override-channels -c conda-forge -c defaults --all
-      conda install --yes --quiet -c conda-forge "conda<4.7.11a0"  # HACK
     env: {
       OSX_FORCE_SDK_DOWNLOAD: "1"
     }
