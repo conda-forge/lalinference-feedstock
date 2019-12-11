@@ -10,12 +10,16 @@ pushd ${SRC_DIR}
 # configure only python bindings and pure-python extras
 ./configure \
 	--prefix=$PREFIX \
-	--disable-swig-iface \
-	--enable-swig-python \
-	--enable-python \
 	--disable-doxygen \
 	--disable-gcc-flags \
-	--enable-silent-rules || { cat config.log; exit 1; }
+	--disable-swig-iface \
+	--enable-help2man \
+	--enable-mpi \
+	--enable-openmp \
+	--enable-python \
+	--enable-swig-python \
+	--enable-silent-rules \
+;
 
 # build
 make -j ${CPU_COUNT} -C swig

@@ -10,14 +10,16 @@ set -e
 ./configure \
 	--prefix="${PREFIX}" \
 	--disable-doxygen \
-	--enable-help2man \
-	--enable-swig-iface \
+	--disable-gcc-flags \
+	--disable-python \
 	--disable-swig-octave \
 	--disable-swig-python \
-	--disable-python \
-	--disable-gcc-flags \
+	--enable-help2man \
+	--enable-mpi \
+	--enable-openmp \
 	--enable-silent-rules \
-	--enable-openmp
+	--enable-swig-iface \
+;
 
 # build
 make -j ${CPU_COUNT}
