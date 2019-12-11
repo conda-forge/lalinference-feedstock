@@ -66,6 +66,7 @@ requirements:
 
 test:
   requires:
+    - openssh
     - pkg-config  # [unix]
   commands:
     - test -f "${LALINFERENCE_DATADIR}/lalinference_pipe_example.ini"  # [unix]
