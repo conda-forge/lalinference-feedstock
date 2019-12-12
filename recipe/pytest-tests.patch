@@ -1,0 +1,73 @@
+From bee46f958618db8ab7c0ececa820101909004f7d Mon Sep 17 00:00:00 2001
+From: Duncan Macleod <duncan.macleod@ligo.org>
+Date: Wed, 11 Dec 2019 16:38:25 +0000
+Subject: [PATCH] lalinference: rewrite test_detframe with pytest
+
+so that it can be executed as part of a pytest run
+---
+ lalinference/test/python/test_detframe.py | 43 ++++++++++++-----------
+ 1 file changed, 22 insertions(+), 21 deletions(-)
+
+diff --git a/lalinference/test/python/test_detframe.py b/lalinference/test/python/test_detframe.py
+index cd4e90d10c..0d2018b107 100644
+--- a/test/python/test_detframe.py
++++ b/test/python/test_detframe.py
+@@ -16,33 +16,34 @@
+ # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ #
+ 
++import sys
++
++import numpy as np
++from numpy.testing import assert_allclose
++
++import pytest
++
+ import lal
+ import lalinference as li
+-import numpy as np
+-import sys
+ 
+-Ntest=1000
++NTEST = 1000
+ 
+-LHO=lal.CachedDetectors[lal.LALDetectorIndexLHODIFF]
+-LLO=lal.CachedDetectors[lal.LALDetectorIndexLLODIFF]
++LHO = lal.CachedDetectors[lal.LALDetectorIndexLHODIFF]
++LLO = lal.CachedDetectors[lal.LALDetectorIndexLLODIFF]
+ 
+-def test_invertable(ra,dec,time,tolerance=[1e-6,1e-5,1e-5]):
+-    forward = li.EquatorialToDetFrame(LHO,LLO,time,ra,dec)
+-    back = li.DetFrameToEquatorial(LHO,LLO,*forward)
+-    delta=np.array([abs(time-back[0]),abs(ra-back[1]),abs(dec-back[2])])
+-    if any(delta > tolerance):
+-        return False
+-    else:
+-        return True
++RAS = np.random.uniform(low=0, high=lal.TWOPI, size=NTEST)
++DECS = np.random.uniform(low=-lal.PI/2.0, high=lal.PI/2.0, size=NTEST)
++TIMES = np.random.uniform(low=0, high=lal.DAYSID_SI, size=NTEST)
+ 
+ 
+-ras=np.random.uniform(low=0,high=lal.TWOPI,size=Ntest)
+-decs=np.random.uniform(low=-lal.PI/2.0,high=lal.PI/2.0,size=Ntest)
+-times=np.random.uniform(low=0,high=lal.DAYSID_SI,size=Ntest)
++def test_invertable():
++    res = np.empty((3, NTEST))
++    for i, (ra, dec, time) in enumerate(zip(RAS, DECS, TIMES)):
++        forward = li.EquatorialToDetFrame(LHO, LLO, time, ra, dec)
++        res[:, i] = li.DetFrameToEquatorial(LHO, LLO, *forward)
++    for a, b, tol in zip((TIMES, RAS, DECS), res, (1e-6, 1e-5, 1e-5)):
++        assert_allclose(a, b, atol=tol)
+ 
+-# Test mapping back and forward
+-if all(map(lambda x: test_invertable(*x), zip(ras,decs,times) ) ):
+-    sys.exit(0)
+-else:
+-    sys.exit(1)
+ 
++if __name__ == '__main__':
++    sys.exit(pytest.main(args=[__file__] + sys.argv[1:]))
+-- 
+2.23.0
+

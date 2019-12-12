@@ -10,8 +10,6 @@ channel_targets:
 - conda-forge main
 gsl:
 - '2.5'
-hdf5:
-- 1.10.5
 libcblas:
 - 3.8 *netlib
 macos_machine:
@@ -20,6 +18,8 @@ macos_min_version:
 - '10.9'
 numpy:
 - '1.14'
+openmpi:
+- '4.0'
 pin_run_as_build:
   python:
     min_pin: x.x
