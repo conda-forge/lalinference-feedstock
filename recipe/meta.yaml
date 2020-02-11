@@ -48,6 +48,7 @@ requirements:
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
     - libcblas
+    - libgomp  # [linux and not aarch64]
     - llvm-openmp  # [osx]
     - openmpi
   run:
@@ -106,6 +107,7 @@ outputs:
         - gsl
         - {{ pin_subpackage('lalinference', exact=True) }}
         - libcblas
+        - libgomp  # [linux and not aarch64]
         - llvm-openmp  # [osx]
         - numpy
         - python
