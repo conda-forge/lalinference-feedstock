@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
-{% set version = "1.11.5" %}
-{% set sha256 = "86b0ab707217066cb8e3cb03f01ef93e60d1ff7eb361d0de0f0dbd361f5cf9c1" %}
+{% set version = "1.11.6" %}
+{% set sha256 = "b5b568ee2fd71c39cc8a4ee737dda8b8460369294352146ebbdde026087107db" %}
 
 # dependencies
 {% set chealpix_version = "3.30.0" %}
@@ -20,13 +20,11 @@ package:
 source:
   url: "http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz"
   sha256: "{{ sha256 }}"
-  patches:
-    - pytest-tests.patch
 
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 1
+  number: 0
   skip: true  # [win]
 
 requirements:
