@@ -20,8 +20,6 @@ package:
 source:
   url: "http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz"
   sha256: "{{ sha256 }}"
-  patches:
-    - pytest-tests.patch
 
 build:
   error_overdepending: true
