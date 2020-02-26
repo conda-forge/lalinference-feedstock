@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
-{% set version = "1.11.6" %}
-{% set sha256 = "b5b568ee2fd71c39cc8a4ee737dda8b8460369294352146ebbdde026087107db" %}
+{% set version = "1.11.7" %}
+{% set sha256 = "b804bc47b3d89e5b1a3873bad560eb07f265013638a65f0070851eed7b1e1d9e" %}
 
 # dependencies
 {% set chealpix_version = "3.30.0" %}
@@ -24,7 +24,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 2
+  number: 0
   skip: true  # [win]
 
 requirements:
