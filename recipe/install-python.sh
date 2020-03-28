@@ -7,6 +7,9 @@
 set -e
 pushd ${SRC_DIR}
 
+# only link libraries we actually use
+export GSL_LIBS="-L${PREFIX}/lib -lgsl"
+
 # configure only python bindings and pure-python extras
 ./configure \
 	--prefix=$PREFIX \
@@ -14,8 +17,6 @@ pushd ${SRC_DIR}
 	--disable-gcc-flags \
 	--disable-swig-iface \
 	--enable-help2man \
-	--enable-mpi \
-	--enable-openmp \
 	--enable-python \
 	--enable-swig-python \
 	--enable-silent-rules \

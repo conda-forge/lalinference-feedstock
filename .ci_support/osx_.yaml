@@ -10,8 +10,6 @@ channel_targets:
 - conda-forge main
 gsl:
 - '2.6'
-libcblas:
-- 3.8 *netlib
 macos_machine:
 - x86_64-apple-darwin13.4.0
 macos_min_version:
@@ -25,7 +23,6 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- '2.7'
-- '3.6'
-- '3.7'
-- '3.8'
+- 3.6.* *_cpython
+- 3.7.* *_cpython
+- 3.8.* *_cpython

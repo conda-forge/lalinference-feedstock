@@ -1,16 +1,15 @@
 {% set name = "lalinference" %}
-{% set version = "1.11.7" %}
-{% set sha256 = "b804bc47b3d89e5b1a3873bad560eb07f265013638a65f0070851eed7b1e1d9e" %}
+{% set version = "2.0.0" %}
+{% set sha256 = "0f6527590e5e72dc6dbaeff5a8bd36bf1c477c59ae80c776b0b1392018cb095e" %}
 
 # dependencies
-{% set chealpix_version = "3.30.0" %}
 {% set lal_version = "6.21.0" %}
 {% set lalburst_version = "1.5.3" %}
 {% set lalframe_version = "1.5.0" %}
 {% set lalinspiral_version = "1.10.0" %}
 {% set lalmetaio_version = "1.6.0" %}
 {% set lalpulsar_version = "1.18.2" %}
-{% set lalsimulation_version = "1.10.0" %}
+{% set lalsimulation_version = "2.0.0" %}
 {% set swig_version = "3.0.9" %}
 
 package:
@@ -31,12 +30,12 @@ requirements:
   build:
     - {{ compiler('c') }}
     - help2man
+    - libgomp  # [linux]
     - llvm-openmp  # [osx]
     - make
     - pkg-config >=0.18.0
     - swig >={{ swig_version }}
   host:
-    - chealpix >={{ chealpix_version }}
     - gsl
     - lal >={{ lal_version }} fftw*
     - lalframe >={{ lalframe_version }}
@@ -45,12 +44,10 @@ requirements:
     - lalburst >={{ lalburst_version }}
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
-    - libcblas
-    - libgomp  # [linux and not aarch64]
+    - libgomp  # [linux]
     - llvm-openmp  # [osx]
     - openmpi
   run:
-    - chealpix >={{ chealpix_version }}
     - gsl
     - lal >={{ lal_version }}
     - lalframe >={{ lalframe_version }}
@@ -59,7 +56,6 @@ requirements:
     - lalburst >={{ lalburst_version }}
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
-    - libcblas
     - llvm-openmp  # [osx]
     - openmpi
 
@@ -83,7 +79,7 @@ outputs:
   - name: lalinference
     build:
       run_exports:
-        - {{ pin_subpackage("lalinference", max_pin="x.x") }}
+        - {{ pin_subpackage("lalinference", max_pin="x") }}
 
   - name: python-lalinference
     script: install-python.sh
@@ -91,22 +87,16 @@ outputs:
       error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
-        - libcblas  # [not linux]
+        - python
     requirements:
       build:
         - {{ compiler('c') }}
         - help2man
-        - llvm-openmp  # [osx]
         - make
         - pkg-config >=0.18.0
         - swig >={{ swig_version }}
       host:
-        - chealpix >={{ chealpix_version }}
-        - gsl
         - {{ pin_subpackage('lalinference', exact=True) }}
-        - libcblas
-        - libgomp  # [linux and not aarch64]
-        - llvm-openmp  # [osx]
         - numpy
         - python
         # run requirements needed for help2man
@@ -124,8 +114,7 @@ outputs:
         - scipy >=0.9.0
       run:
         - astropy >=1.1.1
-        - chealpix >={{ chealpix_version }}
-        - gsl
+        - gsl  # [linux]
         - healpy >=1.9.1
         - h5py
         - lal >={{ lal_version }}
@@ -136,8 +125,6 @@ outputs:
         - lalinspiral >={{ lalinspiral_version }}  # [linux]
         - lalpulsar >={{ lalpulsar_version }}  # [linux]
         - {{ pin_subpackage('lalinference', exact=True) }}
-        - libcblas  # [linux]
-        - llvm-openmp  # [osx]
         - lscsoft-glue >=1.54.1
         - matplotlib-base >=1.2.0
         - {{ pin_compatible('numpy') }}
@@ -152,17 +139,19 @@ outputs:
     test:
       imports:
         - lalinference
-        - lalinference.distance
+        - lalinference.bayespputils
         - lalinference.imrtgr
         - lalinference.imrtgr.imrtgrutils
         - lalinference.imrtgr.nrutils
         - lalinference.imrtgr.pneqns
-        - lalinference.moc
+        - lalinference.lalinference_pipe_utils
         - lalinference.nest2pos
         - lalinference.tiger
         - lalinference.tiger.make_injtimes
         - lalinference.tiger.omegascans_dag
         - lalinference.tiger.postproc
+        - lalinference.util.file
+        - lalinference.wrapper
       requires:
         - cpnest
         - mock  # [py<33]
@@ -196,7 +185,7 @@ outputs:
         - lalinference_pipe --help
         - lalinference_pp_pipe --help
         - lalinference_review_test --help
-        - pushd test/python; python -m pytest -v; popd
+        - pushd test/python; python -m pytest -rs -v; popd
     about:
       home: "https://wiki.ligo.org/Computing/LALSuite"
       doc_url: "https://docs.ligo.org/lscsoft/lalsuite/lalinference/"
