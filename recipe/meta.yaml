@@ -30,6 +30,8 @@ requirements:
   build:
     - {{ compiler('c') }}
     - help2man
+    - libgomp  # [linux]
+    - llvm-openmp  # [osx]
     - make
     - pkg-config >=0.18.0
     - swig >={{ swig_version }}
@@ -42,7 +44,8 @@ requirements:
     - lalburst >={{ lalburst_version }}
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
-    - libcblas
+    - libgomp  # [linux]
+    - llvm-openmp  # [osx]
     - openmpi
   run:
     - gsl
@@ -53,7 +56,7 @@ requirements:
     - lalburst >={{ lalburst_version }}
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
-    - libcblas
+    - llvm-openmp  # [osx]
     - openmpi
 
 test:
@@ -84,7 +87,6 @@ outputs:
       error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
-        - libcblas  # [not linux]
         - python
     requirements:
       build:
@@ -96,7 +98,6 @@ outputs:
       host:
         - gsl
         - {{ pin_subpackage('lalinference', exact=True) }}
-        - libcblas
         - numpy
         - python
         # run requirements needed for help2man
@@ -125,7 +126,6 @@ outputs:
         - lalinspiral >={{ lalinspiral_version }}  # [linux]
         - lalpulsar >={{ lalpulsar_version }}  # [linux]
         - {{ pin_subpackage('lalinference', exact=True) }}
-        - libcblas  # [linux]
         - lscsoft-glue >=1.54.1
         - matplotlib-base >=1.2.0
         - {{ pin_compatible('numpy') }}
