@@ -10,8 +10,6 @@ docker_image:
 - condaforge/linux-anvil-comp7
 gsl:
 - '2.6'
-libcblas:
-- 3.8 *netlib
 numpy:
 - '1.14'
 openmpi:
