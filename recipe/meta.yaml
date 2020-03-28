@@ -140,17 +140,19 @@ outputs:
     test:
       imports:
         - lalinference
-        - lalinference.distance
+        - lalinference.bayespputils
         - lalinference.imrtgr
         - lalinference.imrtgr.imrtgrutils
         - lalinference.imrtgr.nrutils
         - lalinference.imrtgr.pneqns
-        - lalinference.moc
+        - lalinference.lalinference_pipe_utils
         - lalinference.nest2pos
         - lalinference.tiger
         - lalinference.tiger.make_injtimes
         - lalinference.tiger.omegascans_dag
         - lalinference.tiger.postproc
+        - lalinference.util.file
+        - lalinference.wrapper
       requires:
         - cpnest
         - mock  # [py<33]
