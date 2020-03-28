@@ -96,7 +96,6 @@ outputs:
         - pkg-config >=0.18.0
         - swig >={{ swig_version }}
       host:
-        - gsl
         - {{ pin_subpackage('lalinference', exact=True) }}
         - numpy
         - python
@@ -115,7 +114,7 @@ outputs:
         - scipy >=0.9.0
       run:
         - astropy >=1.1.1
-        - gsl
+        - gsl  # [linux]
         - healpy >=1.9.1
         - h5py
         - lal >={{ lal_version }}
