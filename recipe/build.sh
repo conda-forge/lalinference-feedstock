@@ -9,6 +9,13 @@ set -e
 # only link libraries we actually use
 export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 
+# select MPI implementation
+if [[ "${mpi}" == "nompi" ]]; then
+	MPI_CONFIG_ARGS="--disable-mpi"
+else
+	MPI_CONFIG_ARGS="--enable-mpi"
+fi
+
 # configure
 ./configure \
 	--prefix="${PREFIX}" \
@@ -18,10 +25,10 @@ export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 	--disable-swig-octave \
 	--disable-swig-python \
 	--enable-help2man \
-	--enable-mpi \
 	--enable-openmp \
 	--enable-silent-rules \
 	--enable-swig-iface \
+	${MPI_CONFIG_ARGS} \
 ;
 
 # build

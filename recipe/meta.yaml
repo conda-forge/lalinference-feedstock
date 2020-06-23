@@ -1,6 +1,18 @@
 {% set name = "lalinference" %}
 {% set version = "2.0.0" %}
 {% set sha256 = "0f6527590e5e72dc6dbaeff5a8bd36bf1c477c59ae80c776b0b1392018cb095e" %}
+{% set build = 1 %}
+
+# set mpi (prioritise nompi via build number)
+{% set mpi = mpi or "nompi" %}
+{% if mpi == "nompi" %}
+{% set build = build + 100 %}
+{% set mpi_prefix = "nompi" %}
+{% set build_pin = "" %}
+{% else %}
+{% set mpi_prefix = "mpi_" + mpi %}
+{% set build_pin = mpi_prefix + "_*" %}
+{% endif %}
 
 # dependencies
 {% set lal_version = "6.21.0" %}
@@ -13,18 +25,19 @@
 {% set swig_version = "3.0.9" %}
 
 package:
-  name: "{{ name }}"
-  version: "{{ version }}"
+  name: {{ name|lower }}
+  version: {{ version }}
 
 source:
-  url: "http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz"
-  sha256: "{{ sha256 }}"
+  url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
+  sha256: {{ sha256 }}
 
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 0
+  number: {{ build }}
   skip: true  # [win]
+  string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
 
 requirements:
   build:
@@ -46,7 +59,7 @@ requirements:
     - lalpulsar >={{ lalpulsar_version }}
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
-    - openmpi
+    - {{ mpi }}  # [mpi != 'nompi']
   run:
     - gsl
     - lal >={{ lal_version }}
@@ -57,7 +70,7 @@ requirements:
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
     - llvm-openmp  # [osx]
-    - openmpi
+    - {{ mpi }}  # [mpi != 'nompi']
 
 test:
   requires:
@@ -69,8 +82,8 @@ test:
     #- lalinference_burst --help
     - lalinference_datadump --help
     - lalinference_injectedlike --help
-    - lalinference_kombine --help
-    - lalinference_mcmc --help
+    - lalinference_kombine --help  # [mpi != 'nompi']
+    - lalinference_mcmc --help  # [mpi != 'nompi']
     - lalinference_nest --help
     - lalinference_version --verbose
     - test "$(pkg-config --modversion ${PKG_NAME})" == "${PKG_VERSION}"  # [unix]
@@ -79,7 +92,7 @@ outputs:
   - name: lalinference
     build:
       run_exports:
-        - {{ pin_subpackage("lalinference", max_pin="x") }}
+        - {{ pin_subpackage("lalinference", max_pin="x") }} {{ build_pin }}
 
   - name: python-lalinference
     script: install-python.sh
@@ -88,6 +101,7 @@ outputs:
       error_overlinking: true
       ignore_run_exports:
         - python
+      string: "{{ mpi_prefix }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
     requirements:
       build:
         - {{ compiler('c') }}
