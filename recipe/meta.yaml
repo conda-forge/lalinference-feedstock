@@ -37,7 +37,7 @@ build:
   error_overlinking: true
   number: {{ build }}
   skip: true  # [win]
-  string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
+  string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
 
 requirements:
   build:
@@ -101,6 +101,7 @@ outputs:
       error_overlinking: true
       ignore_run_exports:
         - python
+      string: "{{ mpi_prefix }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
     requirements:
       build:
         - {{ compiler('c') }}
