@@ -1,7 +1,7 @@
 {% set name = "lalinference" %}
-{% set version = "2.0.0" %}
-{% set sha256 = "0f6527590e5e72dc6dbaeff5a8bd36bf1c477c59ae80c776b0b1392018cb095e" %}
-{% set build = 1 %}
+{% set version = "2.0.1" %}
+{% set sha256 = "466d6db5aeb63d8e86656657e36f082911fce370fa0c54af0ea4843eba923300" %}
+{% set build = 0 %}
 
 # set mpi (prioritise nompi via build number)
 {% set mpi = mpi or "nompi" %}
@@ -37,7 +37,7 @@ build:
   error_overlinking: true
   number: {{ build }}
   skip: true  # [win]
-  string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
+  string: {{ mpi_prefix }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
 
 requirements:
   build:
@@ -101,7 +101,7 @@ outputs:
       error_overlinking: true
       ignore_run_exports:
         - python
-      string: "{{ mpi_prefix }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}"
+      string: {{ mpi_prefix }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
       build:
         - {{ compiler('c') }}
@@ -201,25 +201,25 @@ outputs:
         - lalinference_review_test --help
         - pushd test/python; python -m pytest -rs -v; popd
     about:
-      home: "https://wiki.ligo.org/Computing/LALSuite"
-      doc_url: "https://docs.ligo.org/lscsoft/lalsuite/lalinference/"
-      dev_url: "https://git.ligo.org/lscsoft/lalsuite/"
-      license: "GPL-2.0-or-later"
-      license_family: "GPL"
-      license_file: "COPYING"
-      summary: "LSC Algorithm Inference Library"
+      home: https://wiki.ligo.org/Computing/LALSuite
+      doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalinference/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
+      license: GPL-2.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: LSC Algorithm Inference Library
       description: |
         The LSC Algorithm Inference Library for gravitational wave data
         analysis.  This package contains the python bindings.
 
 about:
-  home: "https://wiki.ligo.org/Computing/LALSuite"
-  doc_url: "https://docs.ligo.org/lscsoft/lalsuite/lalinference/"
-  dev_url: "https://git.ligo.org/lscsoft/lalsuite/"
-  license: "GPL-2.0-or-later"
-  license_family: "GPL"
-  license_file: "COPYING"
-  summary: "LSC Algorithm Inference Library"
+  home: https://wiki.ligo.org/Computing/LALSuite
+  doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalinference/
+  dev_url: https://git.ligo.org/lscsoft/lalsuite/
+  license: GPL-2.0-or-later
+  license_family: GPL
+  license_file: COPYING
+  summary: LSC Algorithm Inference Library
   description: |
     The LSC Algorithm Inference Library for gravitational wave data analysis.
     This package contains the shared-object libraries needed to run
