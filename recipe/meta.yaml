@@ -164,7 +164,6 @@ outputs:
         - lalinference.tiger.make_injtimes
         - lalinference.tiger.omegascans_dag
         - lalinference.tiger.postproc
-        - lalinference.util.file
         - lalinference.wrapper
       requires:
         - cpnest
