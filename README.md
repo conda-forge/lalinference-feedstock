@@ -5,9 +5,13 @@ Home: https://wiki.ligo.org/Computing/LALSuite
 
 Package license: GPL-2.0-or-later
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lalinference-feedstock/blob/master/LICENSE.txt)
 
 Summary: LSC Algorithm Inference Library
+
+Development: https://git.ligo.org/lscsoft/lalsuite/
+
+Documentation: https://docs.ligo.org/lscsoft/lalsuite/lalinference/
 
 The LSC Algorithm Inference Library for gravitational wave data analysis.
 This package contains the shared-object libraries needed to run
