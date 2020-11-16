@@ -1,7 +1,7 @@
 {% set name = "lalinference" %}
-{% set version = "2.0.4" %}
-{% set sha256 = "060a58f8f11615213b9c3fbc8fdab90ae18f975ab419f52b967aeb67f2517045" %}
-{% set build = 1 %}
+{% set version = "2.0.5" %}
+{% set sha256 = "3ffb345b5266f81267260fd0a021f9a24cffc7e7392b79603ecb486383073734" %}
+{% set build = 0 %}
 
 # set mpi (prioritise nompi via build number)
 {% set mpi = mpi or "nompi" %}
