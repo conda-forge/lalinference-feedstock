@@ -22,12 +22,14 @@ export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 	--enable-silent-rules \
 ;
 
-# build
-make -j ${CPU_COUNT} -C swig
-make -j ${CPU_COUNT} -C python
+# swig bindings
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig install-exec-am
 
-# install
-make -j ${CPU_COUNT} -C swig install-exec-am  # swig bindings
-make -j ${CPU_COUNT} -C python install  # pure-python extras
+# python modules
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python install
 
-popd
+# python scripts
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C bin bin_PROGRAMS="" dist_bin_SCRIPTS=""
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C bin bin_PROGRAMS="" dist_bin_SCRIPTS="" install
