@@ -1,7 +1,7 @@
 {% set name = "lalinference" %}
-{% set version = "2.0.4" %}
-{% set sha256 = "060a58f8f11615213b9c3fbc8fdab90ae18f975ab419f52b967aeb67f2517045" %}
-{% set build = 1 %}
+{% set version = "2.0.5" %}
+{% set sha256 = "3ffb345b5266f81267260fd0a021f9a24cffc7e7392b79603ecb486383073734" %}
+{% set build = 0 %}
 
 # set mpi (prioritise nompi via build number)
 {% set mpi = mpi or "nompi" %}
@@ -15,13 +15,13 @@
 {% endif %}
 
 # dependencies
-{% set lal_version = "7.0.0" %}
+{% set lal_version = "7.1.0" %}
 {% set lalburst_version = "1.5.3" %}
 {% set lalframe_version = "1.5.0" %}
-{% set lalinspiral_version = "1.10.0" %}
-{% set lalmetaio_version = "1.6.0" %}
-{% set lalpulsar_version = "2.0.0" %}
-{% set lalsimulation_version = "2.1.0" %}
+{% set lalinspiral_version = "2.0.0" %}
+{% set lalmetaio_version = "2.0.0" %}
+{% set lalpulsar_version = "2.1.0" %}
+{% set lalsimulation_version = "2.3.0" %}
 {% set swig_version = "3.0.9" %}
 
 package:
@@ -125,7 +125,9 @@ outputs:
         - python-lalburst >={{ lalburst_version }}
         - python-lalinspiral >={{ lalinspiral_version }}
         - python-lalpulsar >={{ lalpulsar_version }}
+        - python-ligo-lw
         - scipy >=0.9.0
+        - six
       run:
         - astropy >=1.1.1
         - gsl  # [linux]
@@ -149,7 +151,9 @@ outputs:
         - python-lalburst >={{ lalburst_version }}
         - python-lalinspiral >={{ lalinspiral_version }}
         - python-lalpulsar >={{ lalpulsar_version }}
+        - python-ligo-lw
         - scipy >=0.9.0
+        - six
     test:
       imports:
         - lalinference
@@ -190,6 +194,7 @@ outputs:
         - lalinference_coherence_test --help
         - lalinference_compute_roq_weights --help
         - lalinference_cpnest --help
+        - lalinference_evolve_spins_and_append_samples --help
         - lalinference_merge_posteriors --help
         - lalinference_multi_pipe --help
         - lalinference_nest2pos --help
