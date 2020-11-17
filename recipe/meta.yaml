@@ -127,6 +127,7 @@ outputs:
         - python-lalpulsar >={{ lalpulsar_version }}
         - python-ligo-lw
         - scipy >=0.9.0
+        - six
       run:
         - astropy >=1.1.1
         - gsl  # [linux]
@@ -152,6 +153,7 @@ outputs:
         - python-lalpulsar >={{ lalpulsar_version }}
         - python-ligo-lw
         - scipy >=0.9.0
+        - six
     test:
       imports:
         - lalinference
