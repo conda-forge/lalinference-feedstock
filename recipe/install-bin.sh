@@ -16,6 +16,7 @@ ${SRC_DIR}/configure \
 	--disable-gcc-flags \
 	--disable-swig \
 	--enable-help2man \
+	--enable-openmp \
 	--enable-mpi \
 	--enable-python \
 	--prefix=$PREFIX \
