@@ -14,10 +14,6 @@ Development: https://git.ligo.org/lscsoft/lalsuite/
 Documentation: https://docs.ligo.org/lscsoft/lalsuite/lalinference/
 
 The LSC Algorithm Inference Library for gravitational wave data analysis.
-This package contains the shared-object libraries needed to run
-applications that use the LAL Inference library.  If you want to install
-the Python bindings, please install the associated python-lalinference
-package.
 
 
 Current build status
@@ -93,6 +89,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-lalinference-green.svg)](https://anaconda.org/conda-forge/lalinference) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/lalinference.svg)](https://anaconda.org/conda-forge/lalinference) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/lalinference.svg)](https://anaconda.org/conda-forge/lalinference) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/lalinference.svg)](https://anaconda.org/conda-forge/lalinference) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-liblalinference-green.svg)](https://anaconda.org/conda-forge/liblalinference) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/liblalinference.svg)](https://anaconda.org/conda-forge/liblalinference) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/liblalinference.svg)](https://anaconda.org/conda-forge/liblalinference) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/liblalinference.svg)](https://anaconda.org/conda-forge/liblalinference) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-python--lalinference-green.svg)](https://anaconda.org/conda-forge/python-lalinference) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/python-lalinference.svg)](https://anaconda.org/conda-forge/python-lalinference) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/python-lalinference.svg)](https://anaconda.org/conda-forge/python-lalinference) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/python-lalinference.svg)](https://anaconda.org/conda-forge/python-lalinference) |
 
 Installing lalinference
@@ -104,10 +101,10 @@ Installing `lalinference` from the `conda-forge` channel can be achieved by addi
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `lalinference, python-lalinference` can be installed with:
+Once the `conda-forge` channel has been enabled, `lalinference, liblalinference, python-lalinference` can be installed with:
 
 ```
-conda install lalinference python-lalinference
+conda install lalinference liblalinference python-lalinference
 ```
 
 It is possible to list all of the versions of `lalinference` available on your platform with:
