@@ -3,18 +3,6 @@
 {% set sha256 = "b58195713edf23da074e9f08cc9a767d5d5e11d6d94f4771618ff6a70dc278c0" %}
 {% set build = 0 %}
 
-# set mpi (prioritise nompi via build number)
-{% set mpi = mpi or "nompi" %}
-{% if mpi == "nompi" %}
-{% set mpi_build = build + 100 %}
-{% set mpi_prefix = "nompi" %}
-{% set build_pin = "" %}
-{% else %}
-{% set mpi_build = build %}
-{% set mpi_prefix = "mpi_" + mpi %}
-{% set build_pin = mpi_prefix + "_*" %}
-{% endif %}
-
 # dependencies
 {% set lal_version = "7.1.0" %}
 {% set lalburst_version = "1.5.3" %}
@@ -191,8 +179,9 @@ outputs:
     build:
       ignore_run_exports:
         - python
-      number: {{ mpi_build }}
-      string: {{ mpi_prefix }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
+      # Prioritise nompi via build number
+      number: {{ (build + 100) if (mpi or "nompi") == "nompi" else build }}
+      string: {{ "nompi" if (mpi or "nompi") == "nompi" else ("mpi_" + mpi) }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
       build:
         - {{ compiler('c') }}
