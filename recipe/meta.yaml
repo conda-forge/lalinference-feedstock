@@ -173,9 +173,11 @@ outputs:
         - make
         - pkg-config >=0.18.0
       host:
-        - gsl
-        - {{ pin_subpackage('liblalinference', exact=True) }}
+        - gsl  # [mpi != 'nompi']
         - libgomp  # [linux and mpi != 'nompi']
+        - liblal >={{ lal_version }}
+        - {{ pin_subpackage('liblalinference', exact=True) }}
+        - liblalinspiral >={{ lalinspiral_version }}  # [mpi != 'nompi']
         - llvm-openmp  # [osx and mpi != 'nompi']
         - {{ mpi }}  # [mpi != 'nompi']
         - python
@@ -199,7 +201,7 @@ outputs:
         - gsl  # [mpi != 'nompi']
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalinference', exact=True) }}
-        - liblalinspiral >={{ lalinspiral_version }}
+        - liblalinspiral >={{ lalinspiral_version }}  # [mpi != 'nompi']
         - llvm-openmp  # [osx and mpi != 'nompi']
         - {{ mpi }}  # [mpi != 'nompi']
         - python
