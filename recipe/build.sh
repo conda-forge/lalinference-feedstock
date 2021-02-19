@@ -20,6 +20,7 @@ ${SRC_DIR}/configure \
 	--disable-python \
 	--disable-swig-octave \
 	--disable-swig-python \
+	--enable-openmp \
 	--enable-swig-iface \
 	--prefix="${PREFIX}" \
 	${EXTRA_CONFIG_FLAGS} \

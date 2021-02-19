@@ -30,6 +30,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - llvm-openmp  # [osx]
     - make
     - pkg-config >=0.18.0
     - swig >={{ swig_version }}
@@ -42,6 +43,8 @@ requirements:
     - lalburst >={{ lalburst_version }}
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
+    - libgomp  # [linux]
+    - llvm-openmp  # [osx]
 
 outputs:
   - name: liblalinference
@@ -59,6 +62,7 @@ outputs:
         - swig >={{ swig_version }}
       host:
         - gsl
+        - libgomp  # [linux]
         - liblal >={{ lal_version }} fftw*
         - liblalframe >={{ lalframe_version }}
         - liblalmetaio >={{ lalmetaio_version }}
@@ -66,6 +70,7 @@ outputs:
         - liblalburst >={{ lalburst_version }}
         - liblalinspiral >={{ lalinspiral_version }}
         - liblalpulsar >={{ lalpulsar_version }}
+        - llvm-openmp  # [osx]
       run:
         - gsl
         - liblal >={{ lal_version }} fftw*
@@ -75,6 +80,7 @@ outputs:
         - liblalburst >={{ lalburst_version }}
         - liblalinspiral >={{ lalinspiral_version }}
         - liblalpulsar >={{ lalpulsar_version }}
+        - llvm-openmp  # [osx]
       run_constrained:
         - lalinference >=2.0.6
         - python-lalinference >=2.0.6
