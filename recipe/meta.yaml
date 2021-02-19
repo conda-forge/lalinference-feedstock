@@ -166,10 +166,15 @@ outputs:
       license: GPL-2.0-or-later
       license_family: GPL
       license_file: COPYING
-      summary: LSC Algorithm Inference Library
+      summary: LSC Algorithm Inference Library Python libraries
       description: |
         The LSC Algorithm Inference Library for gravitational wave data
-        analysis.  This package contains the python bindings.
+        analysis.  This package contains the Python bindings of
+        the LALInference C libraries and additional Python modules.
+
+        Note: this package only provides the importable Python libraries.
+        All command-line interfaces, scripts, and executables are
+        part of the [`lalinference`](/conda-forge/lalinference) package.
 
   - name: lalinference
     script: install-bin.sh
