@@ -30,7 +30,6 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
-    - llvm-openmp  # [osx]
     - make
     - pkg-config >=0.18.0
     - swig >={{ swig_version }}
@@ -43,8 +42,6 @@ requirements:
     - lalburst >={{ lalburst_version }}
     - lalinspiral >={{ lalinspiral_version }}
     - lalpulsar >={{ lalpulsar_version }}
-    - libgomp  # [linux]
-    - llvm-openmp  # [osx]
 
 outputs:
   - name: liblalinference
@@ -62,7 +59,6 @@ outputs:
         - swig >={{ swig_version }}
       host:
         - gsl
-        - libgomp  # [linux]
         - liblal >={{ lal_version }} fftw*
         - liblalframe >={{ lalframe_version }}
         - liblalmetaio >={{ lalmetaio_version }}
@@ -70,7 +66,6 @@ outputs:
         - liblalburst >={{ lalburst_version }}
         - liblalinspiral >={{ lalinspiral_version }}
         - liblalpulsar >={{ lalpulsar_version }}
-        - llvm-openmp  # [osx]
       run:
         - gsl
         - liblal >={{ lal_version }} fftw*
@@ -80,7 +75,6 @@ outputs:
         - liblalburst >={{ lalburst_version }}
         - liblalinspiral >={{ lalinspiral_version }}
         - liblalpulsar >={{ lalpulsar_version }}
-        - llvm-openmp  # [osx]
       run_constrained:
         - lalinference >=2.0.6
         - python-lalinference >=2.0.6
@@ -88,7 +82,24 @@ outputs:
       requires:
         - pkg-config
       commands:
-        - test $(pkg-config --modversion --print-errors lalinference) == "${PKG_VERSION}"
+        # check library
+        - test -f ${PREFIX}/lib/liblalinference${SHLIB_EXT}  # [unix]
+        # check activate variables
+        - test "${LALFRAME_DATADIR}" = "${PREFIX}/share/lalframe"  # [unix]
+        # check pkg-config
+        - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalinference
+    about:
+      home: https://wiki.ligo.org/Computing/LALSuite
+      doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalinference/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
+      license: GPL-2.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: LSC Algorithm Inference Library shared object libraries
+      description: |
+        The LSC Algorithm Inference Library for gravitational wave data
+        analysis.  This package contains the shared object libraries
+        needed to run applications that use the LAL Inspiral library.
 
   - name: python-lalinference
     script: install-python.sh
@@ -126,15 +137,13 @@ outputs:
         - python-lalpulsar >={{ lalpulsar_version }}
         - python-ligo-lw
         - scipy >=0.9.0
-        # lalsuite swig bindings segfault with numpy 1.20.0
-        - numpy <1.20.0a0
     test:
       requires:
         - pytest >=4.0.0a0
       source_files:
         - test/python
       commands:
-        - python -m pytest -rs -v test/python/
+        - python -m pytest -ra -v test/python/
       imports:
         - lalinference
         - lalinference.bayespputils
