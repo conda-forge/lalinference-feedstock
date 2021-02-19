@@ -85,7 +85,7 @@ outputs:
         # check library
         - test -f ${PREFIX}/lib/liblalinference${SHLIB_EXT}  # [unix]
         # check activate variables
-        - test "${LALFRAME_DATADIR}" = "${PREFIX}/share/lalframe"  # [unix]
+        - test "${LALINFERENCE_DATADIR}" = "${PREFIX}/share/lalinference"  # [unix]
         # check pkg-config
         - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalinference
     about:
