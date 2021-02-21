@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
-{% set version = "2.0.6" %}
-{% set sha256 = "b58195713edf23da074e9f08cc9a767d5d5e11d6d94f4771618ff6a70dc278c0" %}
+{% set version = "2.0.7" %}
+{% set sha256 = "f86fcf00155ab6e31772138e105a6906be17b4f61aa2a63d61012f6e00d4fc69" %}
 {% set build = 0 %}
 
 # dependencies
@@ -88,7 +88,24 @@ outputs:
       requires:
         - pkg-config
       commands:
-        - test $(pkg-config --modversion --print-errors lalinference) == "${PKG_VERSION}"
+        # check library
+        - test -f ${PREFIX}/lib/liblalinference${SHLIB_EXT}  # [unix]
+        # check activate variables
+        - test "${LALINFERENCE_DATADIR}" = "${PREFIX}/share/lalinference"  # [unix]
+        # check pkg-config
+        - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalinference
+    about:
+      home: https://wiki.ligo.org/Computing/LALSuite
+      doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalinference/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
+      license: GPL-2.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: LSC Algorithm Inference Library shared object libraries
+      description: |
+        The LSC Algorithm Inference Library for gravitational wave data
+        analysis.  This package contains the shared object libraries
+        needed to run applications that use the LAL Inspiral library.
 
   - name: python-lalinference
     script: install-python.sh
@@ -126,15 +143,13 @@ outputs:
         - python-lalpulsar >={{ lalpulsar_version }}
         - python-ligo-lw
         - scipy >=0.9.0
-        # lalsuite swig bindings segfault with numpy 1.20.0
-        - numpy <1.20.0a0
     test:
       requires:
         - pytest >=4.0.0a0
       source_files:
         - test/python
       commands:
-        - python -m pytest -rs -v test/python/
+        - python -m pytest -ra -v test/python/
       imports:
         - lalinference
         - lalinference.bayespputils
@@ -157,10 +172,15 @@ outputs:
       license: GPL-2.0-or-later
       license_family: GPL
       license_file: COPYING
-      summary: LSC Algorithm Inference Library
+      summary: LSC Algorithm Inference Library Python libraries
       description: |
         The LSC Algorithm Inference Library for gravitational wave data
-        analysis.  This package contains the python bindings.
+        analysis.  This package contains the Python bindings of
+        the LALInference C libraries and additional Python modules.
+
+        Note: this package only provides the importable Python libraries.
+        All command-line interfaces, scripts, and executables are
+        part of the `lalinference` package.
 
   - name: lalinference
     script: install-bin.sh
