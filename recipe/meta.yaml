@@ -180,7 +180,7 @@ outputs:
 
         Note: this package only provides the importable Python libraries.
         All command-line interfaces, scripts, and executables are
-        part of the [`lalinference`](/conda-forge/lalinference) package.
+        part of the `lalinference` package.
 
   - name: lalinference
     script: install-bin.sh
