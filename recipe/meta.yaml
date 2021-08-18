@@ -1,7 +1,7 @@
 {% set name = "lalinference" %}
 {% set version = "2.0.7" %}
 {% set sha256 = "f86fcf00155ab6e31772138e105a6906be17b4f61aa2a63d61012f6e00d4fc69" %}
-{% set build = 0 %}
+{% set build = 1 %}
 
 # dependencies
 {% set lal_version = "7.1.0" %}
