@@ -207,6 +207,10 @@ outputs:
         - make
         - pkg-config >=0.18.0
         - sed
+        # extras for cross-compiling:
+        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        - numpy                               # [build_platform != target_platform]
+        - python                              # [build_platform != target_platform]
       host:
         - gsl  # [mpi != 'nompi']
         - libgomp  # [linux and mpi != 'nompi']
