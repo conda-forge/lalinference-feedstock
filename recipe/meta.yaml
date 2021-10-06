@@ -115,6 +115,7 @@ outputs:
       error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
+        - openssl
         # ignore run_exports from python's recipe
         - python
     requirements:
@@ -130,6 +131,7 @@ outputs:
       host:
         - {{ pin_subpackage('liblalinference', exact=True) }}
         - numpy
+        - openssl
         - python
       run:
         - astropy >=1.1.1
@@ -192,6 +194,7 @@ outputs:
     script: install-bin.sh
     build:
       ignore_run_exports:
+        - openssl
         - python
       # Prioritise nompi via build number
       number: {{ (build + 100) if (mpi or "nompi") == "nompi" else build }}
@@ -212,6 +215,7 @@ outputs:
         - liblalinspiral >={{ lalinspiral_version }}  # [mpi != 'nompi']
         - llvm-openmp  # [osx and mpi != 'nompi']
         - {{ mpi }}  # [mpi != 'nompi']
+        - openssl
         - python
         - {{ pin_subpackage('python-lalinference', exact=True) }}
         # run requirements needed for help2man
