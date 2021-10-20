@@ -1,7 +1,6 @@
 {% set name = "lalinference" %}
 {% set version = "3.0.0" %}
-{% set sha256 = "e3bad2f0f3a0458abcde440426743697eaa06d596ed4191a03afc2b0d8b4f215" %}
-{% set build = 0 %}
+{% set build = 1 %}
 
 # dependencies
 {% set lal_version = "7.1.0" %}
@@ -19,7 +18,10 @@ package:
 
 source:
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: {{ sha256 }}
+  sha256: e3bad2f0f3a0458abcde440426743697eaa06d596ed4191a03afc2b0d8b4f215
+  patches:
+    # don't check gsl_version when cross-compiling
+    - no-gsl_version-check.patch  # [build_platform != target_platform]
 
 build:
   error_overdepending: true
@@ -113,6 +115,7 @@ outputs:
       error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
+        - openssl
         # ignore run_exports from python's recipe
         - python
     requirements:
@@ -121,10 +124,15 @@ outputs:
         - make
         - pkg-config
         - swig >={{ swig_version }}
+        # extras for cross-compiling:
+        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        - numpy                               # [build_platform != target_platform]
+        - python                              # [build_platform != target_platform]
       host:
         - {{ pin_subpackage('liblalinference', exact=True) }}
-        - python
         - numpy
+        - openssl
+        - python
       run:
         - astropy >=1.1.1
         - healpy >=1.9.1
@@ -186,6 +194,7 @@ outputs:
     script: install-bin.sh
     build:
       ignore_run_exports:
+        - openssl
         - python
       # Prioritise nompi via build number
       number: {{ (build + 100) if (mpi or "nompi") == "nompi" else build }}
@@ -193,10 +202,16 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
-        - help2man >=1.37
+        - help2man >=1.37  # [build_platform == target_platform]
         - llvm-openmp  # [osx and mpi != 'nompi']
         - make
         - pkg-config >=0.18.0
+        - sed
+        # extras for cross-compiling:
+        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        - numpy                               # [build_platform != target_platform]
+        - python                              # [build_platform != target_platform]
+        - {{ mpi }}                           # [build_platform != target_platform and mpi == 'openmpi']
       host:
         - gsl  # [mpi != 'nompi']
         - libgomp  # [linux and mpi != 'nompi']
@@ -205,19 +220,20 @@ outputs:
         - liblalinspiral >={{ lalinspiral_version }}  # [mpi != 'nompi']
         - llvm-openmp  # [osx and mpi != 'nompi']
         - {{ mpi }}  # [mpi != 'nompi']
+        - openssl
         - python
         - {{ pin_subpackage('python-lalinference', exact=True) }}
-        # run requirements needed for help2man
-        - astropy >=1.1.1
-        - h5py
-        - ligo-gracedb
-        - lscsoft-glue >=1.54.1
-        - matplotlib-base >=1.2.0
-        - python-lal >={{ lal_version }}
-        - python-lalsimulation >={{ lalsimulation_version }}
-        - python-ligo-lw
-        - scipy >=0.9.0
-        - six
+        # run requirements needed for help2man (not when cross compiling)
+        - astropy >=1.1.1  # [build_platform == target_platform]
+        - h5py  # [build_platform == target_platform]
+        - ligo-gracedb  # [build_platform == target_platform]
+        - lscsoft-glue >=1.54.1  # [build_platform == target_platform]
+        - matplotlib-base >=1.2.0  # [build_platform == target_platform]
+        - python-lal >={{ lal_version }}  # [build_platform == target_platform]
+        - python-lalsimulation >={{ lalsimulation_version }}  # [build_platform == target_platform]
+        - python-ligo-lw  # [build_platform == target_platform]
+        - scipy >=0.9.0  # [build_platform == target_platform]
+        - six  # [build_platform == target_platform]
       run:
         - astropy >=1.1.1
         - gsl  # [mpi != 'nompi']

@@ -10,16 +10,30 @@ cd ${_builddir}
 # only link libraries we actually use
 export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 
-# configure only python bindings and pure-python extras
+# handle cross compiling
+if [[ $build_platform != $target_platform ]]; then
+	# help2man doesn't work when cross compiling
+	CONFIGURE_ARGS="${CONFIGURE_ARGS} --disable-help2man"
+
+	# enable cross compiling with openmpi
+	if [[ "${mpi}" == "openmpi" ]]; then
+		cp -rf ${PREFIX}/share/openmpi/*.txt ${BUILD_PREFIX}/share/openmpi/
+	fi
+fi
+
+if [[ "${mpi}" != "nompi" ]]; then
+	# only the MPI executables use OpenMP
+	CONFIGURE_ARGS="${CONFIGURE_ARGS} --enable-mpi --enable-openmp"
+fi
+
+# configure only what we need to build executables (and man pages)
 ${SRC_DIR}/configure \
 	--disable-doxygen \
 	--disable-gcc-flags \
 	--disable-swig \
-	--enable-help2man \
-	--enable-mpi \
-	--enable-openmp \
 	--enable-python \
 	--prefix=$PREFIX \
+	${CONFIGURE_ARGS} \
 ;
 
 # install binaries
