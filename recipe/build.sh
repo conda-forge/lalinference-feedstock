@@ -17,6 +17,7 @@ export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 ${SRC_DIR}/configure \
 	--disable-doxygen \
 	--disable-gcc-flags \
+	--disable-help2man \
 	--disable-python \
 	--disable-swig-octave \
 	--disable-swig-python \
