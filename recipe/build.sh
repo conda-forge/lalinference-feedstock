@@ -1,4 +1,6 @@
 #!/bin/bash
+# Get an updated config.sub and config.guess
+cp $BUILD_PREFIX/share/gnuconfig/config.* ./gnuscripts
 #
 # Configure, build, and test a LALSuite subpackage (e.g. `lal`), including
 # the SWIG interface files, but without any actual language bindings
