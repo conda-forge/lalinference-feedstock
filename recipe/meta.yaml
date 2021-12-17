@@ -44,6 +44,8 @@ requirements:
     - liblalpulsar >={{ lalpulsar_version }}
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
+    # here to help the solver
+    - openssl
 
 outputs:
   - name: liblalinference
@@ -51,6 +53,8 @@ outputs:
     build:
       error_overdepending: true
       error_overlinking: true
+      ignore_run_exports:
+        - openssl
       run_exports:
         - {{ pin_subpackage("liblalinference", max_pin="x") }}
     requirements:
@@ -70,6 +74,8 @@ outputs:
         - liblalinspiral >={{ lalinspiral_version }}
         - liblalpulsar >={{ lalpulsar_version }}
         - llvm-openmp  # [osx]
+        # here to help the solver
+        - openssl
       run:
         - gsl
         - liblal >={{ lal_version }} fftw*
