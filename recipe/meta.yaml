@@ -223,7 +223,7 @@ outputs:
         - liblalinspiral >={{ lalinspiral_version }}  # [mpi != 'nompi']
         - llvm-openmp  # [osx and mpi != 'nompi']
         - {{ mpi }}  # [mpi != 'nompi']
-        - openssl
+        - openssl 1.1
         - python
         - {{ pin_subpackage('python-lalinference', exact=True) }}
         # run requirements needed for help2man (not when cross compiling)
