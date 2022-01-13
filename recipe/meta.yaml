@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
-{% set version = "3.0.1" %}
-{% set build = 1 %}
+{% set version = "3.0.2" %}
+{% set build = 0 %}
 
 # dependencies
 {% set lal_version = "7.1.0" %}
@@ -18,7 +18,7 @@ package:
 
 source:
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 12c9710981b971f831cac76d7f6faa6ad448dc282fa53a7e18fd7f29dc2a07db
+  sha256: 202458a78730e7fdb14043792a971d82ed5ac0637aaf9597018ae1e02652be83
   patches:
     # https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/1755
     - collections.abc.patch
