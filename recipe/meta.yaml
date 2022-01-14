@@ -19,9 +19,6 @@ package:
 source:
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: 202458a78730e7fdb14043792a971d82ed5ac0637aaf9597018ae1e02652be83
-  patches:
-    # https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/1755
-    - collections.abc.patch
 
 build:
   error_overdepending: true
