@@ -1,5 +1,5 @@
 {% set name = "lalinference" %}
-{% set version = "3.0.2" %}
+{% set version = "3.0.3" %}
 {% set build = 0 %}
 
 # dependencies
@@ -18,7 +18,7 @@ package:
 
 source:
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 202458a78730e7fdb14043792a971d82ed5ac0637aaf9597018ae1e02652be83
+  sha256: 1e317d34d6ddc5eba67117bfbfd324e5502941578a5bba7b80ae48c48759783e
 
 build:
   error_overdepending: true
