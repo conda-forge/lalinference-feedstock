@@ -11,6 +11,12 @@ _builddir="_build${PY_VER}"
 cp -r _build ${_builddir}
 cd ${_builddir}
 
+# replace package name in debug-prefix-map with source name
+export CFLAGS=$(
+   echo ${CFLAGS:-} |
+   sed -E 's|'\/usr\/local\/src\/conda\/${PKG_NAME}'|/usr/local/src/conda/lalinference|g'
+)
+
 # only link libraries we actually use
 export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 

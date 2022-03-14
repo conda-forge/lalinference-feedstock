@@ -10,6 +10,12 @@ set -e
 mkdir -pv _build
 cd _build
 
+# replace package name in debug-prefix-map with source name
+export CFLAGS=$(
+   echo ${CFLAGS:-} |
+   sed -E 's|'\/usr\/local\/src\/conda\/${PKG_NAME}'|/usr/local/src/conda/lalinference|g'
+)
+
 # only link libraries we actually use
 export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 
