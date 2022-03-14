@@ -1,14 +1,14 @@
 {% set name = "lalinference" %}
-{% set version = "3.0.2" %}
+{% set version = "3.0.3" %}
 {% set build = 0 %}
 
 # dependencies
 {% set lal_version = "7.1.0" %}
 {% set lalburst_version = "1.5.3" %}
-{% set lalframe_version = "1.6.0" %}
+{% set lalframe_version = "2.0.0" %}
 {% set lalinspiral_version = "2.0.0" %}
 {% set lalmetaio_version = "2.1.0" %}
-{% set lalpulsar_version = "3.1.0" %}
+{% set lalpulsar_version = "4.0.0" %}
 {% set lalsimulation_version = "3.1.0" %}
 {% set swig_version = "3.0.10" %}
 
@@ -18,7 +18,7 @@ package:
 
 source:
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 202458a78730e7fdb14043792a971d82ed5ac0637aaf9597018ae1e02652be83
+  sha256: 1e317d34d6ddc5eba67117bfbfd324e5502941578a5bba7b80ae48c48759783e
 
 build:
   error_overdepending: true
@@ -48,6 +48,29 @@ requirements:
     - openssl
 
 outputs:
+  - name: lalinference-data
+    script: install-data.sh
+    requirements:
+      build:
+        - make
+      run_constrained:
+        - liblalinference >=3.0.3
+    test:
+      commands:
+        - test -f ${LALINFERENCE_DATADIR}/fiducialBNS.xml  # [unix]
+    about:
+      home: https://wiki.ligo.org/Computing/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite.git
+      license: GPL-2.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: LSC Algorithm Inference Library data files
+      description: |
+        The LSC Algorithm Inference Library for gravitational wave data analysis.
+        This package contains the data files needed to run various applications
+        and routines that use the LAL Inference library.
+
   - name: liblalinference
     script: install-lib.sh
     build:
@@ -65,6 +88,7 @@ outputs:
         - swig >={{ swig_version }}
       host:
         - gsl
+        - {{ pin_subpackage("lalinference-data", exact=True) }}
         - libgomp  # [linux]
         - liblal >={{ lal_version }} fftw*
         - liblalframe >={{ lalframe_version }}
@@ -78,6 +102,7 @@ outputs:
         - openssl
       run:
         - gsl
+        - {{ pin_subpackage("lalinference-data", exact=True) }}
         - liblal >={{ lal_version }} fftw*
         - liblalframe >={{ lalframe_version }}
         - liblalmetaio >={{ lalmetaio_version }}

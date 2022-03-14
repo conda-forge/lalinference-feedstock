@@ -7,15 +7,15 @@ Package license: GPL-2.0-or-later
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lalinference-feedstock/blob/master/LICENSE.txt)
 
-Summary: LSC Algorithm Inference Library shared object libraries
+Summary: LSC Algorithm Inference Library data files
 
-Development: https://git.ligo.org/lscsoft/lalsuite/
+Development: https://git.ligo.org/lscsoft/lalsuite.git
 
-Documentation: https://docs.ligo.org/lscsoft/lalsuite/lalinference/
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
 
-The LSC Algorithm Inference Library for gravitational wave data
-analysis.  This package contains the shared object libraries
-needed to run applications that use the LAL Inspiral library.
+The LSC Algorithm Inference Library for gravitational wave data analysis.
+This package contains the data files needed to run various applications
+and routines that use the LAL Inference library.
 
 
 Current build status
@@ -70,6 +70,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-lalinference-green.svg)](https://anaconda.org/conda-forge/lalinference) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/lalinference.svg)](https://anaconda.org/conda-forge/lalinference) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/lalinference.svg)](https://anaconda.org/conda-forge/lalinference) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/lalinference.svg)](https://anaconda.org/conda-forge/lalinference) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-lalinference--data-green.svg)](https://anaconda.org/conda-forge/lalinference-data) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/lalinference-data.svg)](https://anaconda.org/conda-forge/lalinference-data) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/lalinference-data.svg)](https://anaconda.org/conda-forge/lalinference-data) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/lalinference-data.svg)](https://anaconda.org/conda-forge/lalinference-data) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-liblalinference-green.svg)](https://anaconda.org/conda-forge/liblalinference) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/liblalinference.svg)](https://anaconda.org/conda-forge/liblalinference) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/liblalinference.svg)](https://anaconda.org/conda-forge/liblalinference) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/liblalinference.svg)](https://anaconda.org/conda-forge/liblalinference) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-python--lalinference-green.svg)](https://anaconda.org/conda-forge/python-lalinference) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/python-lalinference.svg)](https://anaconda.org/conda-forge/python-lalinference) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/python-lalinference.svg)](https://anaconda.org/conda-forge/python-lalinference) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/python-lalinference.svg)](https://anaconda.org/conda-forge/python-lalinference) |
 
@@ -83,10 +84,10 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `lalinference, liblalinference, python-lalinference` can be installed with:
+Once the `conda-forge` channel has been enabled, `lalinference, lalinference-data, liblalinference, python-lalinference` can be installed with:
 
 ```
-conda install lalinference liblalinference python-lalinference
+conda install lalinference lalinference-data liblalinference python-lalinference
 ```
 
 It is possible to list all of the versions of `lalinference` available on your platform with:
