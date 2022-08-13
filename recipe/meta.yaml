@@ -3,13 +3,12 @@
 {% set build = 0 %}
 
 # dependencies
-{% set lal_version = "7.1.0" %}
-{% set lalburst_version = "1.5.3" %}
+{% set lal_version = "7.2.0" %}
+{% set lalburst_version = "1.6.0" %}
 {% set lalframe_version = "2.0.0" %}
-{% set lalinspiral_version = "2.0.0" %}
-{% set lalmetaio_version = "2.1.0" %}
-{% set lalpulsar_version = "4.0.0" %}
-{% set lalsimulation_version = "3.1.0" %}
+{% set lalinspiral_version = "3.0.0" %}
+{% set lalmetaio_version = "3.0.0" %}
+{% set lalsimulation_version = "4.0.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
@@ -17,7 +16,7 @@ package:
   version: {{ version }}
 
 source:
-  url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
+  url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: 165b97765884c0bc505728c0b9c73a7d93cdee7092beadd1e62925fafebd58eb
 
 build:
@@ -41,7 +40,6 @@ requirements:
     - liblalsimulation >={{ lalsimulation_version }}
     - liblalburst >={{ lalburst_version }}
     - liblalinspiral >={{ lalinspiral_version }}
-    - liblalpulsar >={{ lalpulsar_version }}
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
     # here to help the solver
@@ -96,7 +94,6 @@ outputs:
         - liblalsimulation >={{ lalsimulation_version }}
         - liblalburst >={{ lalburst_version }}
         - liblalinspiral >={{ lalinspiral_version }}
-        - liblalpulsar >={{ lalpulsar_version }}
         - llvm-openmp  # [osx]
         # here to help the solver
         - openssl
@@ -109,7 +106,6 @@ outputs:
         - liblalsimulation >={{ lalsimulation_version }}
         - liblalburst >={{ lalburst_version }}
         - liblalinspiral >={{ lalinspiral_version }}
-        - liblalpulsar >={{ lalpulsar_version }}
         - llvm-openmp  # [osx]
       run_constrained:
         - lalinference >=2.0.6
@@ -126,7 +122,7 @@ outputs:
         - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalinference
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
-      doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalinference/
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
       dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPL-2.0-or-later
       license_family: GPL
@@ -176,7 +172,6 @@ outputs:
         - python-lalsimulation >={{ lalsimulation_version }}
         - python-lalburst >={{ lalburst_version }}
         - python-lalinspiral >={{ lalinspiral_version }}
-        - python-lalpulsar >={{ lalpulsar_version }}
         - python-ligo-lw >=1.7.0
         - scipy >=0.9.0
     test:
@@ -203,7 +198,7 @@ outputs:
         - lalinference.wrapper
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
-      doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalinference/
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
       dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPL-2.0-or-later
       license_family: GPL
@@ -290,7 +285,6 @@ outputs:
         - test -f "${LALINFERENCE_DATADIR}/lalinference_pipe_example.ini"  # [unix]
         # C executables
         - lalinference_bench --psdlength 1000 --psdstart 1 --seglen 8 --srate 4096 --trigtime 0 --ifo H1 --H1-channel LALSimAdLIGO --H1-cache LALSimAdLIGO --dataseed 1324 --Niter 10 --fix-chirpmass 1.21
-        #- lalinference_burst --help
         - lalinference_datadump --help
         - lalinference_injectedlike --help
         - lalinference_kombine --help  # [mpi != 'nompi']
@@ -327,7 +321,7 @@ outputs:
         - lalinference
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
-      doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalinference/
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
       dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPL-2.0-or-later
       license_family: GPL
@@ -338,7 +332,7 @@ outputs:
 
 about:
   home: https://wiki.ligo.org/Computing/LALSuite
-  doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalinference/
+  doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
   dev_url: https://git.ligo.org/lscsoft/lalsuite/
   license: GPL-2.0-or-later
   license_family: GPL
