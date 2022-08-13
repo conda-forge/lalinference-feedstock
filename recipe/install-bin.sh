@@ -2,6 +2,8 @@
 
 set -ex
 
+_make="make -j ${CPU_COUNT} V=1 VERBOSE=1"
+
 # build in a sub-directory using a copy of the python build
 _builddir="_build${PY_VER}_${mpi}"
 cp -r _build${PY_VER} ${_builddir}
@@ -43,7 +45,7 @@ ${SRC_DIR}/configure \
 ;
 
 # install binaries
-make -j ${CPU_COUNT} V=1 VERBOSE=1 install -C bin
+${_make} install -C bin
 
 # install system configuration files
-make -j ${CPU_COUNT} V=1 VERBOSE=1 install-sysconfDATA
+${_make} install-sysconfDATA
