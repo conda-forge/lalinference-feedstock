@@ -9,7 +9,7 @@
 {% set lalinspiral_version = "3.0.0" %}
 {% set lalmetaio_version = "3.0.0" %}
 {% set lalsimulation_version = "4.0.0" %}
-{% set swig_version = "3.0.10" %}
+{% set swig_version = "3.0.10,<4.1.0a0" %}
 
 package:
   name: {{ name }}-split
