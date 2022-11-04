@@ -42,8 +42,6 @@ requirements:
     - liblalinspiral >={{ lalinspiral_version }}
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
-    # here to help the solver
-    - openssl
 
 outputs:
   - name: lalinference-data
@@ -74,8 +72,6 @@ outputs:
     build:
       error_overdepending: true
       error_overlinking: true
-      ignore_run_exports:
-        - openssl
       run_exports:
         - {{ pin_subpackage("liblalinference", max_pin="x") }}
     requirements:
@@ -95,8 +91,6 @@ outputs:
         - liblalburst >={{ lalburst_version }}
         - liblalinspiral >={{ lalinspiral_version }}
         - llvm-openmp  # [osx]
-        # here to help the solver
-        - openssl
       run:
         - gsl
         - {{ pin_subpackage("lalinference-data", exact=True) }}
@@ -140,7 +134,6 @@ outputs:
       error_overlinking: true
       ignore_run_exports:
         - numpy
-        - openssl
         - python
     requirements:
       build:
@@ -155,7 +148,6 @@ outputs:
       host:
         - {{ pin_subpackage('liblalinference', exact=True) }}
         - numpy
-        - openssl
         - python
       run:
         - astropy >=1.1.1
@@ -217,7 +209,6 @@ outputs:
     script: install-bin.sh
     build:
       ignore_run_exports:
-        - openssl
         - python
       # Prioritise nompi via build number
       number: {{ (build + 100) if (mpi or "nompi") == "nompi" else build }}
@@ -243,7 +234,6 @@ outputs:
         - liblalinspiral >={{ lalinspiral_version }}  # [mpi != 'nompi']
         - llvm-openmp  # [osx and mpi != 'nompi']
         - {{ mpi }}  # [mpi != 'nompi']
-        - openssl 1.1
         - python
         - {{ pin_subpackage('python-lalinference', exact=True) }}
         # run requirements needed for help2man (not when cross compiling)
