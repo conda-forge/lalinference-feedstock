@@ -128,7 +128,7 @@ outputs:
         needed to run applications that use the LAL Inspiral library.
 
   - name: python-lalinference
-    script: install-python.sh
+    script: build-python.sh
     build:
       error_overdepending: true
       error_overlinking: true
