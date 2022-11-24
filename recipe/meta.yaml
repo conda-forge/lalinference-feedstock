@@ -206,7 +206,7 @@ outputs:
         part of the `lalinference` package.
 
   - name: lalinference
-    script: install-bin.sh
+    script: build-bin.sh
     build:
       ignore_run_exports:
         - python
