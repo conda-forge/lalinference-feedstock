@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
 {% set version = "4.1.1" %}
-{% set build = 2 %}
+{% set build = 3 %}
 
 # dependencies
 {% set lal_version = "7.2.2" %}
@@ -128,7 +128,7 @@ outputs:
         needed to run applications that use the LAL Inspiral library.
 
   - name: python-lalinference
-    script: install-python.sh
+    script: build-python.sh
     build:
       error_overdepending: true
       error_overlinking: true
@@ -206,7 +206,7 @@ outputs:
         part of the `lalinference` package.
 
   - name: lalinference
-    script: install-bin.sh
+    script: build-bin.sh
     build:
       ignore_run_exports:
         - python
