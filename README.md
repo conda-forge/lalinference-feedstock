@@ -1,11 +1,29 @@
+About lalinference-feedstock
+============================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lalinference-feedstock/blob/main/LICENSE.txt)
+
 About lalinference
-==================
+------------------
 
 Home: https://wiki.ligo.org/Computing/LALSuite
 
 Package license: GPL-2.0-or-later
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lalinference-feedstock/blob/main/LICENSE.txt)
+Summary: LSC Algorithm Inference Library
+
+Development: https://git.ligo.org/lscsoft/lalsuite/
+
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
+
+The LSC Algorithm Inference Library for gravitational wave data analysis.
+
+About lalinference-data
+-----------------------
+
+Home: https://wiki.ligo.org/Computing/LALSuite
+
+Package license: GPL-2.0-or-later
 
 Summary: LSC Algorithm Inference Library data files
 
@@ -16,6 +34,44 @@ Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
 The LSC Algorithm Inference Library for gravitational wave data analysis.
 This package contains the data files needed to run various applications
 and routines that use the LAL Inference library.
+
+About liblalinference
+---------------------
+
+Home: https://wiki.ligo.org/Computing/LALSuite
+
+Package license: GPL-2.0-or-later
+
+Summary: LSC Algorithm Inference Library shared object libraries
+
+Development: https://git.ligo.org/lscsoft/lalsuite/
+
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
+
+The LSC Algorithm Inference Library for gravitational wave data
+analysis.  This package contains the shared object libraries
+needed to run applications that use the LAL Inspiral library.
+
+About python-lalinference
+-------------------------
+
+Home: https://wiki.ligo.org/Computing/LALSuite
+
+Package license: GPL-2.0-or-later
+
+Summary: LSC Algorithm Inference Library Python libraries
+
+Development: https://git.ligo.org/lscsoft/lalsuite/
+
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
+
+The LSC Algorithm Inference Library for gravitational wave data
+analysis.  This package contains the Python bindings of
+the LALInference C libraries and additional Python modules.
+
+Note: this package only provides the importable Python libraries.
+All command-line interfaces, scripts, and executables are
+part of the `lalinference` package.
 
 
 Current build status

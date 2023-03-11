@@ -1,15 +1,15 @@
 {% set name = "lalinference" %}
-{% set version = "4.1.1" %}
-{% set build = 3 %}
+{% set version = "4.1.2" %}
+{% set build = 0 %}
 
 # dependencies
-{% set lal_version = "7.2.2" %}
-{% set lalburst_version = "1.6.0" %}
-{% set lalframe_version = "2.0.0" %}
-{% set lalinspiral_version = "3.0.0" %}
-{% set lalmetaio_version = "3.0.0" %}
-{% set lalsimulation_version = "4.0.0" %}
-{% set swig_version = "3.0.10,<4.1.0a0" %}
+{% set lal_version = "7.3.0" %}
+{% set lalburst_version = "2.0.0" %}
+{% set lalframe_version = "3.0.0" %}
+{% set lalinspiral_version = "4.0.0" %}
+{% set lalmetaio_version = "4.0.0" %}
+{% set lalsimulation_version = "5.0.0" %}
+{% set swig_version = "3.0.10" %}
 
 package:
   name: {{ name }}-split
@@ -17,7 +17,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 89c1d375b3471c9d05dfda668080dbf04e72e22b8fd87c0c45ad300b6bf78a80
+  sha256: d3fc3981e05cc434c05de605c8b7d2b4570bbb2fbd15b063837c36eaff42baa6
 
 build:
   error_overdepending: true
@@ -231,7 +231,7 @@ outputs:
         - libgomp  # [linux and mpi != 'nompi']
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalinference', exact=True) }}
-        - liblalinspiral >={{ lalinspiral_version }}  # [mpi != 'nompi']
+        - liblalmetaio >={{ lalmetaio_version }}  # [mpi != 'nompi']
         - llvm-openmp  # [osx and mpi != 'nompi']
         - {{ mpi }}  # [mpi != 'nompi']
         - python
@@ -253,7 +253,7 @@ outputs:
         - h5py
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalinference', exact=True) }}
-        - liblalinspiral >={{ lalinspiral_version }}  # [mpi != 'nompi']
+        - liblalmetaio >={{ lalmetaio_version }}  # [mpi != 'nompi']
         - ligo-gracedb
         - llvm-openmp  # [osx and mpi != 'nompi']
         - lscsoft-glue >=1.54.1
