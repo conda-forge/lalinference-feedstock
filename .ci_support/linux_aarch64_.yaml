@@ -3,7 +3,7 @@ BUILD:
 c_compiler:
 - gcc
 c_compiler_version:
-- '11'
+- '12'
 cdt_arch:
 - aarch64
 cdt_name:
@@ -23,10 +23,10 @@ mpi:
 mpich:
 - '4'
 numpy:
-- '1.21'
+- '1.22'
 - '1.23'
-- '1.21'
-- '1.21'
+- '1.22'
+- '1.22'
 openmpi:
 - '4'
 pin_run_as_build:

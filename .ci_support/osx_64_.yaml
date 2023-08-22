@@ -3,7 +3,7 @@ MACOSX_DEPLOYMENT_TARGET:
 c_compiler:
 - clang
 c_compiler_version:
-- '14'
+- '15'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -11,7 +11,7 @@ channel_targets:
 gsl:
 - '2.7'
 llvm_openmp:
-- '14'
+- '15'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 mpi:
@@ -21,10 +21,10 @@ mpi:
 mpich:
 - '4'
 numpy:
-- '1.21'
+- '1.22'
 - '1.23'
-- '1.21'
-- '1.21'
+- '1.22'
+- '1.22'
 openmpi:
 - '4'
 pin_run_as_build:

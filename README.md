@@ -3,6 +3,7 @@ About lalinference-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lalinference-feedstock/blob/main/LICENSE.txt)
 
+
 About lalinference
 ------------------
 
@@ -17,6 +18,7 @@ Development: https://git.ligo.org/lscsoft/lalsuite/
 Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
 
 The LSC Algorithm Inference Library for gravitational wave data analysis.
+
 
 About lalinference-data
 -----------------------
@@ -35,6 +37,7 @@ The LSC Algorithm Inference Library for gravitational wave data analysis.
 This package contains the data files needed to run various applications
 and routines that use the LAL Inference library.
 
+
 About liblalinference
 ---------------------
 
@@ -51,6 +54,7 @@ Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
 The LSC Algorithm Inference Library for gravitational wave data
 analysis.  This package contains the shared object libraries
 needed to run applications that use the LAL Inspiral library.
+
 
 About python-lalinference
 -------------------------
