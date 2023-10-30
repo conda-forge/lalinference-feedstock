@@ -41,7 +41,6 @@ requirements:
     - liblalburst >={{ lalburst_version }}
     - liblalinspiral >={{ lalinspiral_version }}
     - libgomp  # [linux]
-    - llvm-openmp  # [osx]
 
 outputs:
   - name: lalinference-data
@@ -90,7 +89,6 @@ outputs:
         - liblalsimulation >={{ lalsimulation_version }}
         - liblalburst >={{ lalburst_version }}
         - liblalinspiral >={{ lalinspiral_version }}
-        - llvm-openmp  # [osx]
       run:
         - gsl
         - {{ pin_subpackage("lalinference-data", exact=True) }}
@@ -100,7 +98,6 @@ outputs:
         - liblalsimulation >={{ lalsimulation_version }}
         - liblalburst >={{ lalburst_version }}
         - liblalinspiral >={{ lalinspiral_version }}
-        - llvm-openmp  # [osx]
       run_constrained:
         - lalinference >=2.0.6
         - python-lalinference >=2.0.6
@@ -232,7 +229,6 @@ outputs:
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalinference', exact=True) }}
         - liblalmetaio >={{ lalmetaio_version }}  # [mpi != 'nompi']
-        - llvm-openmp  # [osx and mpi != 'nompi']
         - {{ mpi }}  # [mpi != 'nompi']
         - python
         - {{ pin_subpackage('python-lalinference', exact=True) }}
@@ -255,7 +251,6 @@ outputs:
         - {{ pin_subpackage('liblalinference', exact=True) }}
         - liblalmetaio >={{ lalmetaio_version }}  # [mpi != 'nompi']
         - ligo-gracedb
-        - llvm-openmp  # [osx and mpi != 'nompi']
         - lscsoft-glue >=1.54.1
         - matplotlib-base >=1.2.0
         - {{ mpi }}  # [mpi != 'nompi']
