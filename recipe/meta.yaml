@@ -1,5 +1,5 @@
 {% set name = "lalinference" %}
-{% set version = "4.1.4" %}
+{% set version = "4.1.5" %}
 {% set build = 0 %}
 
 # dependencies
@@ -17,7 +17,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: f68ab57a79de353df7b1e18178d4decd2bdfe1664ecb7223742bf8a294ca4a1b
+  sha256: f16e47171aa680b3a229f8abdf61b758d3a27c5abdec4ed508fdfa7de10553ba
 
 build:
   error_overdepending: true
