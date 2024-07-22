@@ -271,6 +271,9 @@ outputs:
         - python-ligo-lw >=1.7.0
         - scipy >=0.9.0
         - six
+      run_constrained:
+        # https://github.com/conda-forge/backports-feedstock/issues/6
+        - setuptools <71.0.0  # [py<39]
     test:
       requires:
         - cpnest
