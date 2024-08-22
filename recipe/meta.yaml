@@ -3,12 +3,12 @@
 {% set build = 0 %}
 
 # dependencies
-{% set lal_version = "7.5.0" %}
+{% set lal_version = "7.6.0" %}
 {% set lalburst_version = "2.0.0" %}
 {% set lalframe_version = "3.0.0" %}
 {% set lalinspiral_version = "5.0.0" %}
 {% set lalmetaio_version = "4.0.0" %}
-{% set lalsimulation_version = "5.4.0" %}
+{% set lalsimulation_version = "6.0.0" %}
 {% set swig_version = "3.0.10" %}
 
 # we can build manuals when:
@@ -216,8 +216,6 @@ outputs:
   - name: lalinference
     script: build-bin.sh
     build:
-      ignore_run_exports:
-        - python
       # Prioritise nompi via build number
       number: {{ (build + 100) if (mpi or "nompi") == "nompi" else build }}
       skip: true  # [py<39 and build_platform != target_platform]
