@@ -1,21 +1,21 @@
 {% set name = "lalinference" %}
-{% set version = "4.1.6" %}
-{% set build = 1 %}
+{% set version = "4.1.7" %}
+{% set build = 0 %}
 
 # dependencies
-{% set lal_version = "7.5.0" %}
+{% set lal_version = "7.6.0" %}
 {% set lalburst_version = "2.0.0" %}
 {% set lalframe_version = "3.0.0" %}
 {% set lalinspiral_version = "5.0.0" %}
 {% set lalmetaio_version = "4.0.0" %}
-{% set lalsimulation_version = "5.4.0" %}
+{% set lalsimulation_version = "6.0.0" %}
 {% set swig_version = "3.0.10" %}
 
 # we can build manuals when:
 # - not cross-compiling
 # - not Python 3.9 (no astropy available for numpy 2.x)
-{% set manpages = False %}
-{% set manpages = True %}  # [py!=39 and build_platform == target_platform]
+{% set manpages = false %}
+{% set manpages = true %}  # [py!=39 and build_platform == target_platform]
 
 package:
   name: {{ name }}-split
@@ -23,10 +23,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 9118ea5bae3fcd910cdf8cc3185404d0c0e366e58bedc68104e9e75119da357d
-  patches:
-    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2269
-    - 0001-lalinference-use-ConfigParser-in-review_test.py.patch
+  sha256: 82578af17e68240c31da390c80985431af73f8cf2dab052089066f661aa976e2
 
 build:
   error_overlinking: true
@@ -142,6 +139,9 @@ outputs:
     script: build-python.sh
     build:
       error_overlinking: true
+      # no python-lalburst on Python 3.9
+      # (astropy (for python-lalsimulation) is incompatible with numpy 2)
+      skip: true  # [py<310]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -216,12 +216,12 @@ outputs:
   - name: lalinference
     script: build-bin.sh
     build:
-      ignore_run_exports:
-        - python
       # Prioritise nompi via build number
       number: {{ (build + 100) if (mpi or "nompi") == "nompi" else build }}
-      skip: true  # [py<39 and build_platform != target_platform]
       string: {{ "nompi" if (mpi or "nompi") == "nompi" else ("mpi_" + mpi) }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
+      # no python-lalburst on Python 3.9
+      # (astropy (for python-lalsimulation) is incompatible with numpy 2)
+      skip: true  # [py<310]
     requirements:
       build:
         - {{ compiler('c') }}
