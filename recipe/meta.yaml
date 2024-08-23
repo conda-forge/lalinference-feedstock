@@ -24,9 +24,6 @@ package:
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: 82578af17e68240c31da390c80985431af73f8cf2dab052089066f661aa976e2
-  patches:
-    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2269
-    - 0001-lalinference-use-ConfigParser-in-review_test.py.patch
 
 build:
   error_overlinking: true
