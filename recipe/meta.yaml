@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
 {% set version = "4.1.7" %}
-{% set build = 1 %}
+{% set build = 2 %}
 
 # dependencies
 {% set lal_version = "7.6.0" %}
@@ -158,7 +158,7 @@ outputs:
         - numpy
         - python
       run:
-        - astropy >=1.1.1
+        - astropy-base >=1.1.1
         - healpy >=1.9.1  # [py<39]
         - healpy >=1.17.3  # [py>=39]
         - h5py
@@ -245,7 +245,7 @@ outputs:
         - {{ mpi }}  # [mpi != 'nompi']
         - python
         # run requirements needed for help2man (not when cross compiling)
-        - astropy >=1.1.1  # [manpages]
+        - astropy-base >=1.1.1  # [manpages]
         - h5py  # [manpages]
         - ligo-gracedb  # [manpages]
         - lscsoft-glue >=1.54.1  # [manpages]
@@ -257,7 +257,7 @@ outputs:
         - scipy >=0.9.0  # [manpages]
         - six  # [manpages]
       run:
-        - astropy >=1.1.1
+        - astropy-base >=1.1.1
         - gsl  # [mpi != 'nompi']
         - h5py
         - liblal >={{ lal_version }}
