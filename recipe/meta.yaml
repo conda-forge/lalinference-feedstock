@@ -36,6 +36,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
+    - libgomp  # [linux]
     - llvm-openmp  # [osx]
     - make
     - pkg-config >=0.18.0
@@ -49,7 +50,6 @@ requirements:
     - liblalsimulation >={{ lalsimulation_version }}
     - liblalburst >={{ lalburst_version }}
     - liblalinspiral >={{ lalinspiral_version }}
-    - libgomp  # [linux]
 
 outputs:
   - name: lalinference-data
@@ -89,13 +89,13 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
+        - libgomp  # [linux]
         - llvm-openmp  # [osx]
         - make
         - swig >={{ swig_version }}
       host:
         - gsl
         - {{ pin_subpackage("lalinference-data", exact=True) }}
-        - libgomp  # [linux]
         - liblal >={{ lal_version }}
         - liblalframe >={{ lalframe_version }}
         - liblalmetaio >={{ lalmetaio_version }}
@@ -229,6 +229,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
         - help2man >=1.37  # [manpages]
+        - libgomp  # [linux and mpi != 'nompi']
         - llvm-openmp  # [osx and mpi != 'nompi']
         - make
         - pkg-config >=0.18.0
@@ -240,7 +241,6 @@ outputs:
         - {{ mpi }}                           # [build_platform != target_platform and mpi == 'openmpi']
       host:
         - gsl  # [mpi != 'nompi']
-        - libgomp  # [linux and mpi != 'nompi']
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalinference', exact=True) }}
         - liblalmetaio >={{ lalmetaio_version }}  # [mpi != 'nompi']
