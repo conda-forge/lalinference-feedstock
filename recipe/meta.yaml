@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
 {% set version = "4.1.7" %}
-{% set build = 1 %}
+{% set build = 2 %}
 
 # dependencies
 {% set lal_version = "7.6.0" %}
@@ -24,6 +24,8 @@ package:
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: 82578af17e68240c31da390c80985431af73f8cf2dab052089066f661aa976e2
+  patches:
+    - patches/0001-common-swig-generate_swig_iface.py-prefer-stringval-.patch
 
 build:
   error_overlinking: true
@@ -34,6 +36,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
+    - libgomp  # [linux]
     - llvm-openmp  # [osx]
     - make
     - pkg-config >=0.18.0
@@ -47,7 +50,6 @@ requirements:
     - liblalsimulation >={{ lalsimulation_version }}
     - liblalburst >={{ lalburst_version }}
     - liblalinspiral >={{ lalinspiral_version }}
-    - libgomp  # [linux]
 
 outputs:
   - name: lalinference-data
@@ -87,13 +89,13 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
+        - libgomp  # [linux]
         - llvm-openmp  # [osx]
         - make
         - swig >={{ swig_version }}
       host:
         - gsl
         - {{ pin_subpackage("lalinference-data", exact=True) }}
-        - libgomp  # [linux]
         - liblal >={{ lal_version }}
         - liblalframe >={{ lalframe_version }}
         - liblalmetaio >={{ lalmetaio_version }}
@@ -158,7 +160,7 @@ outputs:
         - numpy
         - python
       run:
-        - astropy >=1.1.1
+        - astropy-base >=1.1.1
         - healpy >=1.9.1  # [py<39]
         - healpy >=1.17.3  # [py>=39]
         - h5py
@@ -216,6 +218,9 @@ outputs:
   - name: lalinference
     script: build-bin.sh
     build:
+      ignore_run_exports:
+        # just added to help the solver for MPI builds
+        - icu
       # Prioritise nompi via build number
       number: {{ (build + 100) if (mpi or "nompi") == "nompi" else build }}
       string: {{ "nompi" if (mpi or "nompi") == "nompi" else ("mpi_" + mpi) }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
@@ -227,6 +232,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
         - help2man >=1.37  # [manpages]
+        - libgomp  # [linux and mpi != 'nompi']
         - llvm-openmp  # [osx and mpi != 'nompi']
         - make
         - pkg-config >=0.18.0
@@ -238,14 +244,13 @@ outputs:
         - {{ mpi }}                           # [build_platform != target_platform and mpi == 'openmpi']
       host:
         - gsl  # [mpi != 'nompi']
-        - libgomp  # [linux and mpi != 'nompi']
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalinference', exact=True) }}
         - liblalmetaio >={{ lalmetaio_version }}  # [mpi != 'nompi']
         - {{ mpi }}  # [mpi != 'nompi']
         - python
         # run requirements needed for help2man (not when cross compiling)
-        - astropy >=1.1.1  # [manpages]
+        - astropy-base >=1.1.1  # [manpages]
         - h5py  # [manpages]
         - ligo-gracedb  # [manpages]
         - lscsoft-glue >=1.54.1  # [manpages]
@@ -256,8 +261,10 @@ outputs:
         - python-ligo-lw >=1.7.0  # [manpages]
         - scipy >=0.9.0  # [manpages]
         - six  # [manpages]
+        # extras to help the solver
+        - icu
       run:
-        - astropy >=1.1.1
+        - astropy-base >=1.1.1
         - gsl  # [mpi != 'nompi']
         - h5py
         - liblal >={{ lal_version }}
