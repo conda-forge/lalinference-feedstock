@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
 {% set version = "4.1.7" %}
-{% set build = 2 %}
+{% set build = 3 %}
 
 # dependencies
 {% set lal_version = "7.6.0" %}
