@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
-{% set version = "4.1.7" %}
-{% set build = 3 %}
+{% set version = "4.1.8" %}
+{% set build = 0 %}
 
 # dependencies
 {% set lal_version = "7.6.0" %}
@@ -23,7 +23,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 82578af17e68240c31da390c80985431af73f8cf2dab052089066f661aa976e2
+  sha256: a6a43d6ca5a25968a18ec804b92e347c8195b7c3017f16a6e82d1ff49e736368
   patches:
     - patches/0001-common-swig-generate_swig_iface.py-prefer-stringval-.patch
 
