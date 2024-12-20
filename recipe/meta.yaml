@@ -218,7 +218,7 @@ outputs:
     build:
       ignore_run_exports:
         # just added to help the solver for MPI builds
-        - icu
+        - icu *
       # Prioritise nompi via build number
       number: {{ (build + 100) if (mpi or "nompi") == "nompi" else build }}
       string: {{ "nompi" if (mpi or "nompi") == "nompi" else ("mpi_" + mpi) }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
@@ -260,7 +260,7 @@ outputs:
         - scipy >=0.9.0  # [manpages]
         - six  # [manpages]
         # extras to help the solver
-        - icu
+        - icu *
       run:
         - astropy-base >=1.1.1
         - gsl  # [mpi != 'nompi']
