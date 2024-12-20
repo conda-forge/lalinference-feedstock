@@ -24,8 +24,6 @@ package:
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: a6a43d6ca5a25968a18ec804b92e347c8195b7c3017f16a6e82d1ff49e736368
-  patches:
-    - patches/0001-common-swig-generate_swig_iface.py-prefer-stringval-.patch
 
 build:
   error_overlinking: true
