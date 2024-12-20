@@ -16,8 +16,6 @@ channel_targets:
 - conda-forge main
 gsl:
 - '2.7'
-icu:
-- '75'
 llvm_openmp:
 - '18'
 macos_machine:
