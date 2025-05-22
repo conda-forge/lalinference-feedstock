@@ -3,12 +3,12 @@
 {% set build = 0 %}
 
 # dependencies
-{% set lal_version = "7.6.0" %}
+{% set lal_version = "7.7.0" %}
 {% set lalburst_version = "2.0.0" %}
 {% set lalframe_version = "3.0.0" %}
 {% set lalinspiral_version = "5.0.0" %}
 {% set lalmetaio_version = "4.0.0" %}
-{% set lalsimulation_version = "6.1.0" %}
+{% set lalsimulation_version = "6.2.0" %}
 {% set swig_version = "3.0.10" %}
 
 # we can build manuals when:
@@ -162,6 +162,7 @@ outputs:
         - healpy >=1.9.1  # [py<39]
         - healpy >=1.17.3  # [py>=39]
         - h5py
+        - igwn-ligolw >=2.1.0
         - {{ pin_subpackage('liblalinference', exact=True) }}
         - ligo-segments
         - lscsoft-glue >=1.54.1
@@ -172,7 +173,6 @@ outputs:
         - python-lalsimulation >={{ lalsimulation_version }}
         - python-lalburst >={{ lalburst_version }}
         - python-lalinspiral >={{ lalinspiral_version }}
-        - python-ligo-lw >=1.7.0
         - scipy >=0.9.0
     test:
       requires:
@@ -250,13 +250,13 @@ outputs:
         # run requirements needed for help2man (not when cross compiling)
         - astropy-base >=1.1.1  # [manpages]
         - h5py  # [manpages]
+        - igwn-ligolw >=2.1.0
         - ligo-gracedb  # [manpages]
         - lscsoft-glue >=1.54.1  # [manpages]
         - matplotlib-base >=1.2.0  # [manpages]
         - python-lal >={{ lal_version }}  # [manpages]
         - {{ pin_subpackage('python-lalinference', exact=True) }}  # [manpages]
         - python-lalsimulation >={{ lalsimulation_version }}  # [manpages]
-        - python-ligo-lw >=1.7.0  # [manpages]
         - scipy >=0.9.0  # [manpages]
         - six  # [manpages]
         # extras to help the solver
@@ -265,6 +265,7 @@ outputs:
         - astropy-base >=1.1.1
         - gsl  # [mpi != 'nompi']
         - h5py
+        - igwn-ligolw >=2.1.0
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalinference', exact=True) }}
         - liblalmetaio >={{ lalmetaio_version }}  # [mpi != 'nompi']
@@ -276,7 +277,6 @@ outputs:
         - python-lal >={{ lal_version }}
         - {{ pin_subpackage('python-lalinference', exact=True) }}
         - python-lalsimulation >={{ lalsimulation_version }}
-        - python-ligo-lw >=1.7.0
         - scipy >=0.9.0
         - six
       run_constrained:
