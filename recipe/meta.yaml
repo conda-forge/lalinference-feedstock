@@ -1,6 +1,6 @@
 {% set name = "lalinference" %}
 {% set version = "4.1.9" %}
-{% set build = 2 %}
+{% set build = 3 %}
 
 # dependencies
 {% set lal_version = "7.7.0" %}
@@ -219,9 +219,6 @@ outputs:
   - name: lalinference
     script: build-bin.sh
     build:
-      ignore_run_exports:
-        # just added to help the solver for MPI builds
-        - icu *
       # Prioritise nompi via build number
       number: {{ (build + 100) if (mpi or "nompi") == "nompi" else build }}
       string: {{ "nompi" if (mpi or "nompi") == "nompi" else ("mpi_" + mpi) }}_py{{ py }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
@@ -262,8 +259,6 @@ outputs:
         - python-lalsimulation >={{ lalsimulation_version }}  # [manpages]
         - scipy >=0.9.0  # [manpages]
         - six  # [manpages]
-        # extras to help the solver
-        - icu *
       run:
         - astropy-base >=1.1.1
         - gsl  # [mpi != 'nompi']
