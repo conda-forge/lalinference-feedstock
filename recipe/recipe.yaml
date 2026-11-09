@@ -1,0 +1,361 @@
+schema_version: 1
+
+context:
+  version: "5.0.0"
+  build_number: 0
+
+  # dependencies
+  lal_version: 7.7.0
+  lalburst_version: 2.0.0
+  lalframe_version: 3.0.0
+  lalinspiral_version: 5.0.0
+  lalmetaio_version: 4.0.0
+  lalsimulation_version: 6.2.0
+
+  # LAL requires downstream packages to be built with the same version of SWIG,
+  # so we need to pin it here
+  swig_version: 4.4.1
+
+  # help2man needs to run the executables, which isn't possible when
+  # cross-compiling
+  manpages: ${{ build_platform == target_platform }}
+
+recipe:
+  name: lalinference-split
+  version: ${{ version }}
+
+source:
+  - url: https://software.igwn.org/sources/source/lalsuite/lalinference-${{ version }}.tar.xz
+    sha256: 6690bf58d88e451e2e73ade9e82f596f9add4d11b83b2857655a8d79561759a9
+
+build:
+  number: ${{ build_number }}
+  skip:
+    - win
+
+outputs:
+
+  # -- Staging -----------------------
+
+  - staging:
+      name: lalinference-c-build
+    build:
+      script: build
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - make
+        - pkg-config >=0.18.0
+        - python >=3.6
+        - swig ${{ swig_version }}.*
+      host:
+        - gsl
+        - liblal >=${{ lal_version }}
+        - liblalburst >=${{ lalburst_version }}
+        - liblalframe >=${{ lalframe_version }}
+        - liblalinspiral >=${{ lalinspiral_version }}
+        - liblalmetaio >=${{ lalmetaio_version }}
+        - liblalsimulation >=${{ lalsimulation_version }}
+        - if: linux
+          then: libgomp
+          else: llvm-openmp
+
+  # -- Packages ----------------------
+
+  - package:
+      name: lalinference-data
+    inherit:
+      from: lalinference-c-build
+      run_exports: false
+    build:
+      files:
+        - etc/conda/activate.d/activate-lalinference-data.*
+        - etc/conda/deactivate.d/deactivate-lalinference-data.*
+        - share/lalinference/
+    requirements:
+      run_constraints:
+        - liblalinference >=3.0.3
+    tests:
+      - script:
+          - test -f "${LALINFERENCE_DATADIR}/fiducialBNS.xml"
+          - test -f "${LALINFERENCE_DATADIR}/lalinference_pipe_example.ini"
+    about:
+      summary: LSC Algorithm Inference Library data files
+      description: |
+        The LSC Algorithm Inference Library for gravitational wave data analysis.
+        This package contains the data files needed to run various applications
+        and routines that use the LAL Inference library.
+
+  - package:
+      name: liblalinference
+    inherit: lalinference-c-build
+    build:
+      files:
+        - include/lal/
+        - lib/liblalinference*
+        - lib/pkgconfig/lalinference*.pc
+    requirements:
+      run:
+        - ${{ pin_subpackage("lalinference-data", exact=True) }}
+      run_exports:
+        - ${{ pin_subpackage("liblalinference", upper_bound="x") }}
+      run_constraints:
+        - lalinference >=2.0.6
+        - python-lalinference >=2.0.6
+    tests:
+      - package_contents:
+          lib:
+            - lalinference
+      - requirements:
+          run:
+            - pkg-config
+        script:
+          # check activate variables
+          - test "${LALINFERENCE_DATADIR}" = "${PREFIX}/share/lalinference"
+          # check pkg-config
+          - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalinference
+    about:
+      summary: LSC Algorithm Inference Library shared object libraries
+      description: |
+        The LSC Algorithm Inference Library for gravitational wave data
+        analysis.  This package contains the shared object libraries
+        needed to run applications that use the LAL Inference library.
+
+  - package:
+      name: python-lalinference
+    inherit:
+      from: lalinference-c-build
+      run_exports: false
+    build:
+      files:
+        - lib/python*/site-packages/
+      script: build-python
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - make
+        - pkg-config >=0.18.0
+        - swig ${{ swig_version }}.*
+        - if: build_platform != target_platform
+          then:
+            - cross-python_${{ target_platform }}
+            - numpy
+            - python
+      host:
+        - ${{ pin_subpackage("liblalinference", exact=True) }}
+        - numpy
+        - python
+      run:
+        - astropy-base >=1.1.1
+        - healpy >=1.17.3
+        - h5py
+        - igwn-ligolw >=2.1.0
+        - igwn-segments
+        - ${{ pin_subpackage("liblalinference", exact=True) }}
+        - lscsoft-glue >=1.54.1
+        - matplotlib-base >=1.2.0
+        - python
+        - python-lal >=${{ lal_version }}
+        - python-lalburst >=${{ lalburst_version }}
+        - python-lalinspiral >=${{ lalinspiral_version }}
+        - python-lalmetaio >=${{ lalmetaio_version }}
+        - python-lalsimulation >=${{ lalsimulation_version }}
+        - scipy >=0.9.0
+    tests:
+      - python:
+          imports:
+            - lalinference
+            - lalinference.bayespputils
+            - lalinference.imrtgr
+            - lalinference.imrtgr.imrtgrutils
+            - lalinference.imrtgr.nrutils
+            - lalinference.imrtgr.pneqns
+            - lalinference.lalinference_pipe_utils
+            - lalinference.nest2pos
+            - lalinference.plot
+            - lalinference.tiger
+            - lalinference.tiger.make_injtimes
+            - lalinference.tiger.omegascans_dag
+            - lalinference.tiger.postproc
+            - lalinference.wrapper
+          pip_check: false
+      - requirements:
+          run:
+            - pytest >=4.0
+        files:
+          source:
+            - test/python/
+        script:
+          - python -m pytest -ra -v test/python
+    about:
+      summary: LSC Algorithm Inference Library Python libraries
+      description: |
+        The LSC Algorithm Inference Library for gravitational wave data
+        analysis.  This package contains the Python bindings of
+        the LALInference C libraries and additional Python modules.
+
+        Note: this package only provides the importable Python libraries.
+        All command-line interfaces, scripts, and executables are
+        part of the `lalinference` package.
+
+  - package:
+      name: lalinference
+    inherit:
+      from: lalinference-c-build
+      run_exports: false
+    build:
+      # prioritise nompi via build number
+      # (build_number in the string below already resolves to this value)
+      number: ${{ build_number + 100 if mpi == "nompi" else build_number }}
+      string: ${{ "nompi" if mpi == "nompi" else "mpi_" ~ mpi }}_py${{ python | version_to_buildstring }}h${{ hash }}_${{ build_number }}
+      files:
+        - bin/
+        - etc/lalinference-user-env.*
+        - share/man/
+      script: build-bin
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - if: manpages
+          then: help2man >=1.37
+        - make
+        - pkg-config >=0.18.0
+        - rsync
+        - sed
+        - if: build_platform != target_platform
+          then:
+            - cross-python_${{ target_platform }}
+            - numpy
+            - python
+            - if: mpi == "openmpi"
+              then: ${{ mpi }}
+      host:
+        - ${{ pin_subpackage("liblalinference", exact=True) }}
+        - ${{ pin_subpackage("python-lalinference", exact=True) }}
+        - liblal >=${{ lal_version }}
+        - if: mpi != "nompi"
+          then:
+            - if: linux
+              then: libgomp
+              else: llvm-openmp
+            - gsl
+            - liblalmetaio >=${{ lalmetaio_version }}
+            - ${{ mpi }}
+        # needed by ./configure
+        - numpy
+        - python
+        # help2man runs the Python scripts, which need their runtime dependencies
+        - if: manpages
+          then:
+            - astropy-base >=1.1.1
+            # for lalinference_cpnest
+            - cpnest
+            - h5py
+            - igwn-ligolw >=2.1.0
+            - ligo-gracedb
+            - lscsoft-glue >=1.54.1
+            - matplotlib-base >=1.2.0
+            - python-lal >=${{ lal_version }}
+            - python-lalsimulation >=${{ lalsimulation_version }}
+            - scipy >=0.9.0
+            - six
+      run:
+        - ${{ pin_subpackage("liblalinference", exact=True) }}
+        - ${{ pin_subpackage("python-lalinference", exact=True) }}
+        - astropy-base >=1.1.1
+        - h5py
+        - igwn-ligolw >=2.1.0
+        - liblal >=${{ lal_version }}
+        - ligo-gracedb
+        - lscsoft-glue >=1.54.1
+        - matplotlib-base >=1.2.0
+        - python
+        - python-lal >=${{ lal_version }}
+        - python-lalsimulation >=${{ lalsimulation_version }}
+        - scipy >=0.9.0
+        - six
+        - if: mpi != "nompi"
+          then:
+            - gsl
+            - liblalmetaio >=${{ lalmetaio_version }}
+            - ${{ mpi }}
+    tests:
+      - python:
+          imports:
+            - lalinference
+          pip_check: false
+      - requirements:
+          run:
+            - cpnest
+            - openssh
+        script:
+          # assert that the manuals don't just contain errors
+          - if: manpages
+            then:
+              - grep -q ModuleNotFoundError ${PREFIX}/share/man/man1/{cbcBayes,imrtgr_,lalinference_}*.1 && exit 1
+              - cat "${PREFIX}/share/man/man1/lalinference_pipe.1" | head -n 20
+          # data files
+          - test -f "${LALINFERENCE_DATADIR}/lalinference_pipe_example.ini"
+          # C executables
+          - lalinference_bench --psdlength 1000 --psdstart 1 --seglen 8 --srate 4096 --trigtime 0 --ifo H1 --H1-channel LALSimAdLIGO --H1-cache LALSimAdLIGO --dataseed 1324 --Niter 10 --fix-chirpmass 1.21
+          - lalinference_datadump --help
+          - lalinference_injectedlike --help
+          - if: mpi != "nompi"
+            then:
+              - lalinference_kombine --help
+              - lalinference_mcmc --help
+          - lalinference_nest --help
+          - lalinference_version --verbose
+          # the user environment script rewrites PATH, so check that it still works
+          - bash -c '. "${PREFIX}/etc/lalinference-user-env.sh" && lalinference_version'
+          # python scripts
+          - cbcBayesBurstPPAnalysis --help
+          - cbcBayesBurstPostProc --help
+          - cbcBayesCombinePTMCMCh5s --help
+          - cbcBayesCombinePosteriors --help
+          - cbcBayesCompPos --help
+          - cbcBayesDIEvidence --help
+          - cbcBayesGraceDBinfo --help
+          - cbcBayesMCMC2pos --help
+          - cbcBayesPPAnalysis --help
+          - cbcBayesPlotSpinDisk --help
+          - cbcBayesPosToSimBurst --help
+          - cbcBayesPosToSimInspiral --help
+          - cbcBayesPostProc --help
+          - cbcBayesThermoInt --help
+          - imrtgr_imr_consistency_test --help
+          - lalinference_burst_pp_pipe --help
+          - lalinference_coherence_test --help
+          - lalinference_compute_roq_weights --help
+          - lalinference_cpnest --help
+          - lalinference_merge_posteriors --help
+          - lalinference_multi_pipe --help
+          - lalinference_nest2pos --help
+          - lalinference_pipe --help
+          - lalinference_pp_pipe --help
+          - lalinference_review_test --help
+    about:
+      summary: LSC Algorithm Inference Library
+      description: |
+        The LSC Algorithm Inference Library for gravitational wave data analysis.
+        This package contains the runtime tools.
+
+about:
+  summary: LSC Algorithm Inference Library
+  description: |
+    The LSC Algorithm Inference Library for gravitational wave data analysis.
+  homepage: https://wiki.ligo.org/Computing/LALSuite
+  documentation: https://lscsoft.docs.ligo.org/lalsuite/lalinference/
+  repository: https://git.ligo.org/lscsoft/lalsuite/
+  license: GPL-2.0-or-later
+  license_file: COPYING
+
+extra:
+  feedstock-name: lalinference
+  recipe-maintainers:
+    - duncanmmacleod
+    - skymoo
+    - vivienr
