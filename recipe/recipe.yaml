@@ -5,12 +5,12 @@ context:
   build_number: 0
 
   # dependencies
-  lal_version: 7.7.0
-  lalburst_version: 2.0.0
-  lalframe_version: 3.0.0
-  lalinspiral_version: 5.0.0
-  lalmetaio_version: 4.0.0
-  lalsimulation_version: 6.2.0
+  lal_version: 8.0.0
+  lalburst_version: 3.0.0
+  lalframe_version: 3.1.0
+  lalinspiral_version: 5.1.0
+  lalmetaio_version: 4.1.0
+  lalsimulation_version: 7.0.0
 
   # LAL requires downstream packages to be built with the same version of SWIG,
   # so we need to pin it here
