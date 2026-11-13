@@ -1,8 +1,8 @@
 schema_version: 1
 
 context:
-  version: "5.0.0"
-  build_number: 1
+  version: "5.0.1"
+  build_number: 0
 
   # dependencies
   lal_version: 8.0.0
@@ -26,7 +26,7 @@ recipe:
 
 source:
   - url: https://software.igwn.org/sources/source/lalsuite/lalinference-${{ version }}.tar.xz
-    sha256: 6690bf58d88e451e2e73ade9e82f596f9add4d11b83b2857655a8d79561759a9
+    sha256: c6a4184d25541b2bc3bcc853d47c4a4a970f6e839fee716879e27235f6ce4601
 
 build:
   number: ${{ build_number }}
